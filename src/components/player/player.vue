@@ -30,8 +30,8 @@
             <span class="time time-r">{{sortCurrentTime(currentSong.duration)}}</span>
           </div>
           <div class="operators">
-            <div class="icon i-left">
-              <i class="icon-sequence"></i>
+            <div class="icon i-left" @click="changePlayMode">
+              <i :class="iconPlayMode"></i>
             </div>
             <div class="icon i-left" :class=disabled>
               <i @click="prevSong" class="icon-prev"></i>
@@ -57,14 +57,12 @@
         <div class="text">
           <h2 class="name" v-html="currentSong.name"></h2>
           <p class="desc" v-html="currentSong.singer"></p>
-        </div>
-        
+        </div>       
           <div class="control">
             <little-progress :percent="progressPercent" :radius="radius">
               <i class="icon-mini" @click.stop="togglePlay" :class=miniToggleIcon ></i>
             </little-progress>
-          </div>
-        
+          </div>       
         <div class="control">
           <i class="icon-playlist"></i>
         </div>
@@ -78,6 +76,8 @@
 import {mapGetters, mapMutations} from 'vuex'
 import ProgressBar from '@/baseComponents/progress/progress'
 import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
+import {playMode} from '@/common/js/config'
+import {shuffle} from '@/common/js/utils'
 	export default {
     components: {
       ProgressBar,
@@ -96,7 +96,9 @@ import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
         'playList',
         'currentSong',
         'playing',
-        'currentIndex'
+        'currentIndex',
+        'mode',
+        'sequenceList'
       ]),
     singerName(){
       return `-  ${this.currentSong.singer}  -`
@@ -115,6 +117,19 @@ import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
     },
     progressPercent(){
       return this.currentTime / this.currentSong.duration
+    },
+    iconPlayMode(){
+      switch (this.mode){
+        case playMode.sequence:
+          return "icon-sequence"
+          break
+        case playMode.loop:
+          return "icon-loop"
+          break
+        case playMode.random:
+          return "icon-random"
+          break
+      }
     }
    },
    methods: {
@@ -130,8 +145,8 @@ import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
     prevSong(){
       if( !this.canBePlayed ) { return }
 
-      let index = this.currentIndex + 1
-      if( index === this.playList.length ) { index = 0 }
+      let index = this.currentIndex - 1
+      if( index === -1 ) { index = this.playList.length - 1 }
       this.setCurrentIndex(index)
 
       this.canBePlayed = false 
@@ -140,7 +155,8 @@ import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
       if( !this.canBePlayed ) { return }
 
       let index = this.currentIndex + 1
-      if( index === -1 ) { index = this.playList.length - 1 }
+      if( index === this.playList.length ) { index = 0 }
+
       this.setCurrentIndex(index) 
 
       this.canBePlayed = false 
@@ -154,7 +170,9 @@ import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
     ...mapMutations({
       switch: 'SET_FULL_SCREEN',
       setPlayingState: 'SET_PLAYING_STATE',
-      setCurrentIndex: 'SET_CURRENT_INDEX'
+      setCurrentIndex: 'SET_CURRENT_INDEX',
+      setPlayMode: 'SET_PLAY_MODE',
+      setPlayList: 'SET_PLAYLIST'
     }),
     // 当前歌曲播放事件进度
     _currentTime(e){
@@ -181,6 +199,26 @@ import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
       if( !this.playing ){  //拖动进度条时如果歌曲是暂停的，那么还是可以播放
         this.togglePlay()
       }
+    },
+    changePlayMode(){  //点击按钮改变播放模式（提交mutations）
+      let nextMode = ( this.mode + 1) % 3
+      this.setPlayMode(nextMode)
+      let list = null
+      if( this.mode === playMode.random ) { //随机播放打乱播放列表
+        list = shuffle( this.sequenceList )
+      }else {                               //否则是顺序列表
+        list = this.sequenceList
+      }
+      this.stayCurrentIndex(list)
+      this.setPlayList(list)  //提交mutations改变歌曲顺序     
+    },
+    // 改变播放模式时当前播放歌曲索引发生变化，需要重设索引防止播放列表不可控制
+    stayCurrentIndex(list){
+      // findIndex是es6的数组方法，返回数组中满足条件的第一个元素的索引
+      let stayIndex = list.findIndex((item) => {
+        return item.id === this.currentSong.id
+      })
+      this.setCurrentIndex(stayIndex)
     }
    },
    watch: {  
@@ -196,9 +234,6 @@ import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
         val ? audio.play() : audio.pause()
       })
     }
-   },
-   created(){
-    console.log(this.currentSong)
    }
 	}
 </script>

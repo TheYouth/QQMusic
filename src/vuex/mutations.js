@@ -13,7 +13,7 @@ const mutations = {
 	[types.SET_PLAYLIST](state, list) {  //播放列表（list）
 	  state.playList = list
 	},
-	[types.SET_SEQUENCE_LIST](state, list) {  //播放列表（list）
+	[types.SET_SEQUENCE_LIST](state, list) {  //默认播放列表（list）
 	  state.sequenceList = list
 	},
 	[types.SET_PLAY_MODE](state, mode) {  //播放模式（0/1/2）
