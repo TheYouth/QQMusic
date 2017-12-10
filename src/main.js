@@ -11,8 +11,8 @@ import fastclick from 'fastclick'
 fastclick.attach(document.body) //body上的所有元素都没有300ms延迟了
 
 Vue.use(VueLazyload, {
-	loading: require('@/components/m-header/logo@2y.png'),
-	error: require('@/components/m-header/logo@2y.png'),
+	loading: require('@/components/m-header/logo@3y.png'),
+	error: require('@/components/m-header/logo@3y.png'),
 	preLoad: 1
 })
 

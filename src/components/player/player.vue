@@ -10,20 +10,25 @@
             <i class="icon-back"></i>
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
-          <h2 class="subtitle" v-html="currentSong.singer"></h2>
+          <h2 class="subtitle" v-html="singerName"></h2>
         </div>
         <div class="middle">
           <div class="middle-l">
-            <transition name="cd">
               <div class="cd-wrapper">
-                <div class="cd" :class=rotateCD>
-                  <img class="image" :src="currentSong.image">
+                <div class="cd"  :class=rotateCD>
+                  <img class="image" v-lazy="currentSong.image">
                 </div>
               </div>
-            </transition>
-          </div>
+          </div>tion>
         </div>
         <div class="bottom">
+          <div class="progress-wrapper">
+            <span class="time time-l">{{sortCurrentTime(currentTime)}}</span>
+            <div class="progress-bar-wrapper">
+              <progress-bar :progressPercent="progressPercent" @customProgress="customProgress"></progress-bar>
+            </div>
+            <span class="time time-r">{{sortCurrentTime(currentSong.duration)}}</span>
+          </div>
           <div class="operators">
             <div class="icon i-left">
               <i class="icon-sequence"></i>
@@ -47,30 +52,42 @@
     <transition name="mini">
       <div class="mini-player" v-show="!fullScreen" @click="show_fullScreen">
         <div class="icon">
-          <img width="40" :src="currentSong.image"  :class=rotateCD>
+          <img width="40" :src="currentSong.image" :class=rotateCD>
         </div>
         <div class="text">
           <h2 class="name" v-html="currentSong.name"></h2>
           <p class="desc" v-html="currentSong.singer"></p>
         </div>
-        <div class="control">
-          <i @click.stop="togglePlay" :class=miniToggleIcon></i>
-        </div>
+        
+          <div class="control">
+            <little-progress :percent="progressPercent" :radius="radius">
+              <i class="icon-mini" @click.stop="togglePlay" :class=miniToggleIcon ></i>
+            </little-progress>
+          </div>
+        
         <div class="control">
           <i class="icon-playlist"></i>
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="currentSong.url" @canplay="canplay" @error="error"></audio>
+    <audio ref="audio" :src="currentSong.url" @canplay="canplay" @error="error" @timeupdate="_currentTime"></audio>
   </div>
 </template>
 
 <script type="text/javascript">
 import {mapGetters, mapMutations} from 'vuex'
+import ProgressBar from '@/baseComponents/progress/progress'
+import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
 	export default {
+    components: {
+      ProgressBar,
+      LittleProgress
+    },
     data(){
       return {
-        canBePlayed: false
+        canBePlayed: false,
+        currentTime: 0,
+        radius: 32
       }
     },
    computed: {
@@ -81,6 +98,9 @@ import {mapGetters, mapMutations} from 'vuex'
         'playing',
         'currentIndex'
       ]),
+    singerName(){
+      return `-  ${this.currentSong.singer}  -`
+    },
     toggleIcon() {  // 根据this.playing改变图标class
       return this.playing ? "icon-pause" : "icon-play"
     },
@@ -92,6 +112,9 @@ import {mapGetters, mapMutations} from 'vuex'
     },
     disabled(){  //弱网络环境下歌曲未load完成时图标变灰
       return this.canBePlayed ? '' : "disable"
+    },
+    progressPercent(){
+      return this.currentTime / this.currentSong.duration
     }
    },
    methods: {
@@ -132,8 +155,33 @@ import {mapGetters, mapMutations} from 'vuex'
       switch: 'SET_FULL_SCREEN',
       setPlayingState: 'SET_PLAYING_STATE',
       setCurrentIndex: 'SET_CURRENT_INDEX'
-    })
-
+    }),
+    // 当前歌曲播放事件进度
+    _currentTime(e){
+      this.currentTime = e.target.currentTime
+    },
+    sortCurrentTime(t){  //改变时间格式
+      t = t | 0
+      let minute = t / 60 | 0
+      let second = this._pad( t % 60 )
+      return `${minute}:${second}`
+    },
+    _pad(t){  //把时间统一变为两位数
+      const n = 2
+      let len = t.toString().length
+      while( len < n ) {
+        t = '0' + t
+        len++
+      }
+      return t
+    },
+    // 接收progress组件派发的拉动进度条事件，这时改变歌曲播放进度
+    customProgress(percent){
+      this.$refs.audio.currentTime = percent * this.currentSong.duration
+      if( !this.playing ){  //拖动进度条时如果歌曲是暂停的，那么还是可以播放
+        this.togglePlay()
+      }
+    }
    },
    watch: {  
     currentSong(){  //在currentSong变化时执行播放，注意在dom ready后才能执行play方法
@@ -217,16 +265,16 @@ import {mapGetters, mapMutations} from 'vuex'
           width: 100%
           height: 0
           padding-top: 80%
+          // &.cd-enter-active, &.cd-leave-active
+          //   transition: all 0.4s cubic-bezier(.6,.35,.4,1.26)
+          // &.cd-enter, &.cd-leave-to
+          //   transform: translate3d(100%,0,0)
           .cd-wrapper
             position: absolute
             left: 10%
             top: 0
             width: 80%
             height: 100%
-            &.cd-enter-active,&.cd-leave-active
-              transition: all .4s
-            &.cd-enter,&.cd-leave-to
-              transform: translate3d(100%,0,0)
             .cd
               width: 100%
               height: 100%
@@ -244,7 +292,6 @@ import {mapGetters, mapMutations} from 'vuex'
                 width: 100%
                 height: 100%
                 border-radius: 50%
-
           .playing-lyric-wrapper
             width: 80%
             margin: 30px auto 0 auto
@@ -334,12 +381,18 @@ import {mapGetters, mapMutations} from 'vuex'
         transition: all 0.4s
         .top, .bottom
           transition: all 0.4s cubic-bezier(.6,.35,.4,1.26)
+        .middle
+          .middle-l
+            transition: all 0.4s cubic-bezier(.6,.35,.4,1.26)
       &.full-enter, &.full-leave-to
         opacity: 0
         .top
           transform: translate3d(0, -100px, 0)
         .bottom
           transform: translate3d(0, 100px, 0)
+        .middle
+          .middle-l
+            transform: translate3d(100%, 0, 0)
     .mini-player
       display: flex
       align-items: center

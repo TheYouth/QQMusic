@@ -164,9 +164,9 @@ const TITLE_NEXT_SIZE = 18
     .title
       position: absolute
       top: 60%
-      left: 10%
+      left: 0
       z-index: 40
-      width: 80%
+      width: 100%
       no-wrap()
       text-align: center
       line-height: 40px
