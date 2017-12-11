@@ -1,12 +1,36 @@
+import getLyric from '@/api/lyric'
+import {ERR_OK} from '@/api/config'
+import {Base64} from 'js-base64'
 export default class Song {
 	constructor({id, mid, singer, name, album, duration, image, url}){
 		this.id = id
+		this.mid = mid
 		this.name = name
 		this.singer = singer
 		this.album = album
 		this.duration = duration
 		this.image = image
 		this.url = url		
+	}
+	// 将歌词数据作为Song类的属性，lyric()将在play.vue中currentSong发生变化时执行
+	getLyric(){
+		// 每次currentSong发生变化时执行这个函数就会发送ajax请求，这显然不合理，如下判断
+		if( this.lyric ) {  //如果有这个歌词，那么直接返回一个Promise对象
+			return Promise.resolve( this.lyric )
+		}
+
+		return new Promise((resolve, reject) => {
+			getLyric(this.mid).then((res) => {
+			if(res.code === ERR_OK){
+				this.lyric = Base64.decode( res.lyric )
+				//console.log(this.lyric)
+				resolve( this.lyric )
+			}else{
+				reject( 'Lyric error' )
+			}
+		})
+		})
+		
 	}
 }
 

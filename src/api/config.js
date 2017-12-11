@@ -1,7 +1,7 @@
 // 公共参数
 export const commonParams = {
 	format: 'json',
-	inCharset: 'utf-8',
+	inCharset: 'utf8',
 	outCharset:	'utf-8',
 	notice: 0
 }

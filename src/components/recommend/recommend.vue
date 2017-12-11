@@ -38,6 +38,7 @@
 <script>
 import getRecommend from '@/api/recommend'
 import getSongsList from '@/api/songslist'
+import getLyric from '@/api/lyric'
 import {ERR_OK} from '@/api/config'
 import Slider from '@/baseComponents/slider/slider'
 import Scroll from '@/baseComponents/scroll/scroll'
@@ -53,8 +54,9 @@ export default {
 		this._getRecommend()
     setTimeout(() => {
       this._getSongsList()
-    }, 1000);
+    }, 1000)
     // this._getSongsList()
+    this._getLyric()
 	},	
 	methods: {
 		_getRecommend(){
@@ -74,6 +76,13 @@ export default {
       } ).catch( (err) => {
         console.log(err)
       } )
+    },
+    _getLyric(){
+      getLyric().then((res) => {
+        if(res.code === ERR_OK){
+          console.log(res.data)
+        }
+      })
     }
 	},
 	components: {

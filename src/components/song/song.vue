@@ -7,9 +7,9 @@
 		<div class="bg-image" :style="bgStyle" ref="bgImage">
 			<h1 class="title" ref="title" v-html="title"></h1>
 			<div class="play-wrapper" ref="playBtn" v-show="songs.length">
-				<div class="play">
+				<div class="play" @click="playAll">
 					<i class="icon-play"></i>
-					<span class="text">点击随机播放</span>
+					<span class="text">一键播放全部</span>
 				</div>
 			</div>
 			<div class="filter" ref="filter"></div>
@@ -86,6 +86,12 @@ const TITLE_NEXT_SIZE = 18
 				this.toPlay({
 					list: this.songs,
 					index
+				})
+			},
+			playAll(){
+				this.toPlay({
+					list: this.songs,
+					index: 0
 				})
 			},
 			...mapActions([
@@ -187,7 +193,7 @@ const TITLE_NEXT_SIZE = 18
         width: 100%
         .play
           box-sizing: border-box
-          width: 135px
+          width: 110px
           padding: 7px 0
           margin: 0 auto
           text-align: center

@@ -60,7 +60,11 @@ export default {
       this.$emit( 'customProgress', percentW )
     },
     clickChangeProgress(e) {
-      this.setW( e.offsetX )
+      // 这里不可直接用e.offsetX（点击进度条区正常，但是点击进度小球后会有问题）
+      //this.setW( e.offsetX )
+      const BAR_LEFT = this.$refs.progressBar.offsetLeft
+      let clickX = e.clientX - BAR_LEFT
+      this.setW( clickX )
       this.setP()
     }
   }

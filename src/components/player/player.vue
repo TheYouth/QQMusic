@@ -68,7 +68,8 @@
         </div>
       </div>
     </transition>
-    <audio ref="audio" :src="currentSong.url" @canplay="canplay" @error="error" @timeupdate="_currentTime"></audio>
+    <audio ref="audio" :src="currentSong.url" 
+    @canplay="canplay" @error="error" @timeupdate="_currentTime" @ended="over"></audio>
   </div>
 </template>
 
@@ -78,6 +79,8 @@ import ProgressBar from '@/baseComponents/progress/progress'
 import LittleProgress from '@/baseComponents/circleProgress/circleProgress'
 import {playMode} from '@/common/js/config'
 import {shuffle} from '@/common/js/utils'
+import lyric from '@/api/lyric'
+import Lyric  from 'lyric-parser'
 	export default {
     components: {
       ProgressBar,
@@ -87,7 +90,8 @@ import {shuffle} from '@/common/js/utils'
       return {
         canBePlayed: false,
         currentTime: 0,
-        radius: 32
+        radius: 32,
+        currentLyric: null
       }
     },
    computed: {
@@ -203,13 +207,13 @@ import {shuffle} from '@/common/js/utils'
     changePlayMode(){  //点击按钮改变播放模式（提交mutations）
       let nextMode = ( this.mode + 1) % 3
       this.setPlayMode(nextMode)
-      let list = null
+      let list = []
       if( this.mode === playMode.random ) { //随机播放打乱播放列表
         list = shuffle( this.sequenceList )
-      }else {                               //否则是顺序列表
+      }else{         //否则是顺序列表
         list = this.sequenceList
       }
-      this.stayCurrentIndex(list)
+      this.stayCurrentIndex(list) //改变歌曲顺序前先重设当前歌曲索引
       this.setPlayList(list)  //提交mutations改变歌曲顺序     
     },
     // 改变播放模式时当前播放歌曲索引发生变化，需要重设索引防止播放列表不可控制
@@ -219,6 +223,20 @@ import {shuffle} from '@/common/js/utils'
         return item.id === this.currentSong.id
       })
       this.setCurrentIndex(stayIndex)
+    },
+    over(){  //歌曲播放结束时的逻辑
+      this.mode === playMode.loop ? this.loopSong() : this.nextSong()
+    },
+    loopSong(){
+      this.$refs.audio.currentTime = 0
+      this.$refs.audio.play()
+    },
+    // 歌词
+    _getLyric(){
+      this.currentSong.getLyric().then((lyric) => {
+        this.currentLyric = new Lyric(lyric)
+        console.log(this.currentLyric)
+      })
     }
    },
    watch: {  
@@ -226,6 +244,7 @@ import {shuffle} from '@/common/js/utils'
       this.$nextTick(() => {
         this.$refs.audio.play()
         this.setPlayingState(true)
+        this._getLyric() //歌词
       })
     },
     playing(val, oldVal){ 
