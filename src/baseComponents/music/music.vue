@@ -4,8 +4,8 @@
       <li v-for="(song, index) in songs" class="item" @click="selectSong(song, index)" :class="{hightLight: song.id === currentSong.id}">
         <song-rank-simple :index="index" >
           <div class="content">
-            <h2 class="name" >{{song.name}}</h2>
-            <p class="desc" >{{getDesc(song)}}</p>
+            <h2 class="name">{{song.name}}</h2>
+            <p class="desc">{{getDesc(song)}}</p>
           </div>
         </song-rank-simple>
         <div class="currentIcon" v-if="song.id === currentSong.id">
@@ -110,5 +110,5 @@ import {mapGetters} from 'vuex'
           no-wrap()
           margin-top: 4px
           color: $color-text-d
-
+          width: 300px
 </style>
