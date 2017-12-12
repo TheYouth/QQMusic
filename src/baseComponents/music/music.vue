@@ -9,7 +9,7 @@
           </div>
         </song-rank-simple>
         <div class="currentIcon" v-if="song.id === currentSong.id">
-          <i class="icon-play"></i>
+          <i class="icon-playing"></i>
         </div>
       </li>
     </ul>
@@ -105,10 +105,10 @@ import {mapGetters} from 'vuex'
         overflow: hidden
         .name
           no-wrap()
-          //color: $color-text
+          color: $color-text-l
         .desc
           no-wrap()
           margin-top: 4px
           color: $color-text-d
-          width: 300px
+          width: 280px
 </style>

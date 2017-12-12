@@ -7,7 +7,7 @@
         </div>
         <div class="top">
           <div class="back" @click="hide_fullScreen">
-            <i class="icon-back"></i>
+            <i class="icon-fanhui"></i>
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="singerName"></h2>
@@ -53,16 +53,16 @@
               <i :class="iconPlayMode"></i>
             </div>
             <div class="icon i-left" :class=disabled>
-              <i @click="prevSong" class="icon-prev"></i>
+              <i @click="prevSong" class="icon-xiayiqu1"></i>
             </div>
             <div class="icon i-center" :class=disabled>
-              <i @click="togglePlay" :class=toggleIcon></i>
+              <i @click="togglePlay" :class="toggleIcon"></i>
             </div>
             <div class="icon i-right" :class=disabled>
-              <i @click="nextSong" class="icon-next"></i>
+              <i @click="nextSong" class="icon-xiayiqu"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon-not-favorite"></i>
+              <i class="icon-xihuan"></i>
             </div>
           </div>
         </div>
@@ -78,13 +78,13 @@
           <p class="desc" v-html="currentSong.singer" v-if="!playing"></p>
           <p class="desc" v-else="playing">{{playingLyricTXT}}</p>
         </div>       
-          <div class="control">
-            <little-progress :percent="progressPercent" :radius="radius">
-              <i class="icon-mini" @click.stop="togglePlay" :class=miniToggleIcon ></i>
-            </little-progress>
-          </div>       
         <div class="control">
-          <i class="icon-playlist"></i>
+          <little-progress :percent="progressPercent" :radius="radius">
+            <i class="icon-mini" @click.stop="togglePlay" :class="miniToggleIcon"></i>
+          </little-progress>
+        </div>       
+        <div class="control">
+          <i class="icon-bofangqi_shouyegequliebiao_"></i>
         </div>
       </div>
     </transition>
@@ -138,10 +138,10 @@ const STAY_LINE = 6
       return `-  ${this.currentSong.singer}  -`
     },
     toggleIcon() {  // 根据this.playing改变图标class
-      return this.playing ? "icon-pause" : "icon-play"
+      return this.playing ? "icon-zanting" : "icon-bofang1"
     },
     miniToggleIcon(){
-      return this.playing ? "icon-pause-mini" : "icon-play-mini"
+      return this.playing ? "icon-pause" : "icon-play"
     },
     rotateCD(){  //旋转的CD
       return this.playing ? "play" : "play pause"
@@ -155,13 +155,13 @@ const STAY_LINE = 6
     iconPlayMode(){
       switch (this.mode){
         case playMode.sequence:
-          return "icon-sequence"
+          return "icon-liebiaoxunhuan"
           break
         case playMode.loop:
-          return "icon-loop"
+          return "icon-danquxunhuan"
           break
         case playMode.random:
-          return "icon-random"
+          return "icon-iconfontsuijibofang0101"
           break
       }
     }
@@ -214,7 +214,7 @@ const STAY_LINE = 6
     },
     sortCurrentTime(t){  //改变时间格式
       t = t | 0
-      let minute = t / 60 | 0
+      let minute = this._pad( t / 60 | 0 )
       let second = this._pad( t % 60 )
       return `${minute}:${second}`
     },
@@ -389,12 +389,11 @@ const STAY_LINE = 6
           top: 0
           left: 6px
           z-index: 50
-          .icon-back
+          .icon-fanhui
             display: block
             padding: 9px
-            font-size: $font-size-large-x
-            color: $color-theme
-            transform: rotate(-90deg)
+            font-size: $font-size-large-xl
+            color: $color-text
         .title
           width: 70%
           margin: 0 auto
@@ -475,7 +474,7 @@ const STAY_LINE = 6
               color: $color-text-l
               font-size: $font-size-medium
               &.current
-                color: $color-text
+                color: $color-theme
       .bottom
         position: absolute
         bottom: 50px
@@ -502,7 +501,7 @@ const STAY_LINE = 6
           margin: 0px auto
           padding: 10px 0
           .time
-            color: $color-text
+            color: $color-theme
             font-size: $font-size-small
             flex: 0 0 30px
             line-height: 30px
@@ -513,6 +512,7 @@ const STAY_LINE = 6
               text-align: right
           .progress-bar-wrapper
             flex: 1
+            margin: 0 5px
         .operators
           display: flex
           align-items: center
@@ -585,23 +585,29 @@ const STAY_LINE = 6
           margin-bottom: 2px
           no-wrap()
           font-size: $font-size-medium
-          color: $color-text
+          color: $color-text-l
         .desc
           no-wrap()
           font-size: $font-size-small
           color: $color-text-d
       .control
         flex: 0 0 30px
-        width: 30px
+        //width: 30px
         padding: 0 10px
-        .icon-play-mini, .icon-pause-mini, .icon-playlist
-          font-size: 30px
+        .icon-play, .icon-pause, .icon-bofangqi_shouyegequliebiao_
+          display: inline-block
+          font-size: 32px
+          width:32px
+          height:32px
           color: $color-theme-d
+        .icon-bofangqi_shouyegequliebiao_
+          color: $color-theme
+          font-size: 40px
         .icon-mini
           font-size: 32px
           position: absolute
-          left: 0
-          top: 0
+          left: 0px
+          top: 2px
   @keyframes rotate
     0%
       transform: rotate(0)

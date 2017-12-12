@@ -1,14 +1,17 @@
 <template>
-  <div class="singer">
+  <div class="singer" ref="singer">
   	<scroll 
   		class="singer-list" 
   		:data="singerList" 
   		:listenScroll="listenScroll"
   		:probeType="probeType"
   		@scroll="_scroll"
+  		ref="scroll"
   		>
   		<ul>
-		  <li v-for="group in singerList" class="list-group" ref="listGroup">
+
+		  <li v-for="group,index in singerList" class="list-group" ref="listGroup">
+		  	<i class="icon-huo" v-if="showHot && index===0"></i>
 		    <h2 class="list-group-title">{{group.tag}}</h2>
 		    <ul>
 		      <li @click="selectSinger(item,index)" v-for="(item,index) in group.items" class="list-group-item">
@@ -19,7 +22,9 @@
 		    </ul>
 		  </li>
 		</ul>
+
 		<div class="list-fixed" v-show="fixedTitle" ref="fixedTitle">
+			<i class="icon-huo" v-if="showHot"></i>
 			<h1 class="fixed-title">{{fixedTitle}}</h1>
 		</div>
 		<div class="loading-container" v-show="!singerList.length">
@@ -39,10 +44,13 @@ import getSingerList from '@/api/singerList'
 import Loading from '@/baseComponents/loading/loading'
 import {ERR_OK} from '@/api/config'
 import {mapMutations} from 'vuex'
+import {adaptBottomMixin} from '@/common/js/mixins'
 const HOT_NAME = '热门'
 const HOT_SINGER_NUM = 10
 const FIXED_HEIGHT = 30
+const TITLE_HEIGHT = 40
 export default {
+	mixins: [adaptBottomMixin],
 	data(){
 		return {
 			singerList: [],
@@ -60,7 +68,10 @@ export default {
 				return ''
 			} 
 			return this.singerList[this.currentIndex] ? this.singerList[this.currentIndex].tag : HOT_NAME
-		}
+		},
+		showHot(){
+			return this.scrollY > 0 || this.fixedTitle === HOT_NAME
+		}	
 	},
 	created(){
 		setTimeout(()=>{
@@ -149,7 +160,14 @@ export default {
 		},
 		...mapMutations({
 			setSinger: 'SET_SINGER'
-		})		
+		}),
+		// 重写mixins方法
+		adaptBottom(playList){
+			const bottom = this.playList.length > 0 ? '40px' : ''
+			this.$refs.singer.style.bottom = bottom
+			this.$refs.scroll._refresh()
+		}
+
 	},
 	watch: {
 		singerList() {
@@ -202,6 +220,10 @@ export default {
     background: $color-background
     .list-group
       padding-bottom: 30px
+      .icon-huo
+        float:left
+        color:red
+        margin: 6px 6px 0 6px
       .list-group-title
         height: 30px
         line-height: 30px
@@ -226,6 +248,10 @@ export default {
       top: 0
       left: 0
       width: 100%
+      .icon-huo
+        float:left
+        color:red
+        margin: 6px 6px 0 6px
       .fixed-title
         height: 30px
         line-height: 30px

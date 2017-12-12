@@ -1,14 +1,8 @@
-<svg width="50px"  height="50px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-facebook" style="background: none;">
-    <rect ng-attr-x="{{config.x1}}" ng-attr-y="{{config.y}}" ng-attr-width="{{config.width}}" ng-attr-height="{{config.height}}" ng-attr-fill="{{config.c1}}" x="17.5" y="27.2046" width="15" height="45.5909" fill="#60aa4f">
-      <animate attributeName="y" calcMode="spline" values="18;30;30" keyTimes="0;0.5;1" dur="0.8" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.16000000000000003s" repeatCount="indefinite"></animate>
-      <animate attributeName="height" calcMode="spline" values="64;40;40" keyTimes="0;0.5;1" dur="0.8" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.16000000000000003s" repeatCount="indefinite"></animate>
-    </rect>
-    <rect ng-attr-x="{{config.x2}}" ng-attr-y="{{config.y}}" ng-attr-width="{{config.width}}" ng-attr-height="{{config.height}}" ng-attr-fill="{{config.c2}}" x="42.5" y="26.0665" width="15" height="47.867" fill="#edd041">
-      <animate attributeName="y" calcMode="spline" values="20.999999999999996;30;30" keyTimes="0;0.5;1" dur="0.8" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.08000000000000002s" repeatCount="indefinite"></animate>
-      <animate attributeName="height" calcMode="spline" values="58.00000000000001;40;40" keyTimes="0;0.5;1" dur="0.8" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="-0.08000000000000002s" repeatCount="indefinite"></animate>
-    </rect>
-    <rect ng-attr-x="{{config.x3}}" ng-attr-y="{{config.y}}" ng-attr-width="{{config.width}}" ng-attr-height="{{config.height}}" ng-attr-fill="{{config.c3}}" x="67.5" y="30" width="15" height="40" fill="#e27a3b">
-      <animate attributeName="y" calcMode="spline" values="24;30;30" keyTimes="0;0.5;1" dur="0.8" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite"></animate>
-      <animate attributeName="height" calcMode="spline" values="52;40;40" keyTimes="0;0.5;1" dur="0.8" keySplines="0 0.5 0.5 1;0 0.5 0.5 1" begin="0s" repeatCount="indefinite"></animate>
-    </rect>
+<svg width="50px"  height="50px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-double-ring" style="background: none;">
+    <circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.c1}}" ng-attr-stroke-dasharray="{{config.dasharray}}" fill="none" stroke-linecap="round" r="40" stroke-width="5" stroke="#f5cd19" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(203.077 50 50)">
+      <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="1.3s" begin="0s" repeatCount="indefinite"></animateTransform>
+    </circle>
+    <circle cx="50" cy="50" ng-attr-r="{{config.radius2}}" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.c2}}" ng-attr-stroke-dasharray="{{config.dasharray2}}" ng-attr-stroke-dashoffset="{{config.dashoffset2}}" fill="none" stroke-linecap="round" r="34" stroke-width="5" stroke="#2eb775" stroke-dasharray="53.40707511102649 53.40707511102649" stroke-dashoffset="53.40707511102649" transform="rotate(-203.077 50 50)">
+      <animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;-360 50 50" keyTimes="0;1" dur="1.3s" begin="0s" repeatCount="indefinite"></animateTransform>
+    </circle>
   </svg>

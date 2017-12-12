@@ -1,6 +1,6 @@
 <template>
-<div class="recommend">
-   <scroll class="recommend-content" :data="songsList">
+<div class="recommend" ref="recommend">
+   <scroll class="recommend-content" :data="songsList" ref="scroll">
     <div>
    	<!-- 获取图片数据是异步的，拿到数据前slider组件已经被mounted，不能正确渲染，需要如下判断 -->
    	<div v-if="recommends.length" class="slider-wrapper">
@@ -13,15 +13,15 @@
    		</slider>
    	</div>
    	<div class="recommend-list">
-   		<h1 class="list-title">热门歌单</h1>
+   		<h1 class="list-title">_—_—_—_—_ 热门歌单 _—_—_—_—_</h1>
    		<ul>
         <li v-for="item in songsList" class="item">
           <div class="icon">
             <img width="60" v-lazy="item.picUrl">
           </div>
           <div class="text">
-            <h2 class="name" v-html="item.songListAuthor"></h2>
-            <p class="desc" v-html="item.songListDesc"></p>
+            <h2 class="name" v-html="item.songListDesc"></h2>
+            <p class="desc" v-html="item.songListAuthor"></p>
           </div>
         </li> 
       </ul>
@@ -43,7 +43,9 @@ import {ERR_OK} from '@/api/config'
 import Slider from '@/baseComponents/slider/slider'
 import Scroll from '@/baseComponents/scroll/scroll'
 import Loading from '@/baseComponents/loading/loading'
+import {adaptBottomMixin} from '@/common/js/mixins'
 export default {	
+  mixins: [adaptBottomMixin],
   data(){
     return{
       recommends: [],
@@ -56,7 +58,6 @@ export default {
       this._getSongsList()
     }, 1000)
     // this._getSongsList()
-    this._getLyric()
 	},	
 	methods: {
 		_getRecommend(){
@@ -77,13 +78,12 @@ export default {
         console.log(err)
       } )
     },
-    _getLyric(){
-      getLyric().then((res) => {
-        if(res.code === ERR_OK){
-          console.log(res.data)
-        }
-      })
-    }
+    // 重写mixins方法
+    adaptBottom(playList){
+        const bottom = this.playList.length > 0 ? '40px' : ''
+        this.$refs.recommend.style.bottom = bottom
+        this.$refs.scroll._refresh()
+    } 
 	},
 	components: {
 		Slider,
@@ -95,6 +95,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
  @import "../../common/stylus/variable"
+  @import "../../common/stylus/mixin"
 
   .recommend
     position: fixed
@@ -113,7 +114,7 @@ export default {
           height: 65px
           line-height: 65px
           text-align: center
-          font-size: $font-size-medium
+          font-size: $font-size-medium-x
           color: $color-theme
         .item
           display: flex
@@ -124,6 +125,8 @@ export default {
             flex: 0 0 60px
             width: 60px
             padding-right: 20px
+            border-radius: 50%
+            // overflow: hidden
           .text
             display: flex
             flex-direction: column
@@ -134,8 +137,10 @@ export default {
             font-size: $font-size-medium
             .name
               margin-bottom: 10px
-              color: $color-text
+              color: $color-text-l
+              no-wrap()
             .desc
+              
               color: $color-text-d
       .loading-container
         position: absolute

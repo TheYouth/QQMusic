@@ -24,6 +24,7 @@
   .rank
     line-height: 20px
     margin-right: 10px
+    color: $color-text-l
     font-size: $font-size-medium  
 
 

@@ -8,8 +8,8 @@
   </div>
 </template>
 
-<script type="text/ecmascript-6">
-  export default {}
+<script type="text/javascript">
+ 
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
@@ -22,6 +22,7 @@
     text-align: center
     color: $color-theme
     font-size: 0
+    background: $color-theme
     .icon
       display: inline-block
       vertical-align: top
@@ -32,10 +33,12 @@
       bg-image('logo')
       background-size: 32px 32px
     .text
+      font-weight: bold
       display: inline-block
       vertical-align: top
       line-height: 44px
       font-size: $font-size-large
+      color: $color-background
     .mine
       position: absolute
       top: 0

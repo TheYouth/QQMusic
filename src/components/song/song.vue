@@ -1,15 +1,15 @@
 <template>
 	<div class="music-list">
 		<div class="back" @click="back">
-			<i class="icon-back"></i>
+			<i class="icon-fanhui"></i>
 		</div>
 		<!-- <h1 class="title" ref="title" v-html="title"></h1> -->
 		<div class="bg-image" :style="bgStyle" ref="bgImage">
 			<h1 class="title" ref="title" v-html="title"></h1>
 			<div class="play-wrapper" ref="playBtn" v-show="songs.length">
 				<div class="play" @click="playAll">
-					<i class="icon-play"></i>
-					<span class="text">一键播放全部</span>
+					<i class="icon-bofang1"></i>
+					<span class="text">一键播放,GO!</span>
 				</div>
 			</div>
 			<div class="filter" ref="filter"></div>
@@ -38,12 +38,14 @@ import Music from '@/baseComponents/music/music'
 import Loading from '@/baseComponents/loading/loading'
 import prefixStyle from '@/common/js/prefixStyle'
 import {mapActions} from 'vuex'
+import {adaptBottomMixin} from '@/common/js/mixins'
 let Transform = prefixStyle('transform')
 const TITLE_HEIGHT = 40
 const PADDING_TOP = '70%'
 const TITLE_PREV_SIZE = 30
 const TITLE_NEXT_SIZE = 18
 	export default {
+		mixins: [adaptBottomMixin],
 		props: {
 			songs: {
 				type: Array,
@@ -96,7 +98,13 @@ const TITLE_NEXT_SIZE = 18
 			},
 			...mapActions([
 				'toPlay'
-			])
+			]),
+			// 重写mixins方法
+			adaptBottom(playList){
+				const bottom = this.playList.length > 0 ? '40px' : ''
+				this.$refs.scroll.$el.style.bottom = bottom
+				this.$refs.scroll._refresh()
+			}
 		},
 		watch: {
 			scrollY(val, oldVal) {
@@ -149,6 +157,7 @@ const TITLE_NEXT_SIZE = 18
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import "../../common/stylus/variable"
+
   .music-list
     position: fixed
     z-index: 100
@@ -162,11 +171,11 @@ const TITLE_NEXT_SIZE = 18
       top: 0
       left: 6px
       z-index: 50
-      .icon-back
+      .icon-fanhui
         display: block
         padding: 10px
         font-size: $font-size-large-x
-        color: $color-theme
+        color: $color-text
     .title
       position: absolute
       top: 60%
@@ -178,7 +187,7 @@ const TITLE_NEXT_SIZE = 18
       line-height: 40px
       //font-size: $font-size-large  18px 
       font-size: 30px
-      color: $color-text
+      color: $color-background
     .bg-image
       position: relative
       width: 100%
@@ -193,19 +202,19 @@ const TITLE_NEXT_SIZE = 18
         width: 100%
         .play
           box-sizing: border-box
-          width: 110px
+          width: 120px
           padding: 7px 0
           margin: 0 auto
           text-align: center
-          border: 1px solid $color-theme
-          color: $color-theme
+          //border: 1px solid $color-theme
+          background-color: $color-theme
           border-radius: 100px
           font-size: 0
-          .icon-play
+          .icon-bofang1
             display: inline-block
             vertical-align: middle
             margin-right: 6px
-            font-size: $font-size-medium-x
+            font-size: $font-size-medium-X
           .text
             display: inline-block
             vertical-align: middle
