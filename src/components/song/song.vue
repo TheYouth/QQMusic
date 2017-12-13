@@ -3,7 +3,9 @@
 		<div class="back" @click="back">
 			<i class="icon-fanhui"></i>
 		</div>
-		<!-- <h1 class="title" ref="title" v-html="title"></h1> -->
+		<div class="detail">
+			<i class="icon-sandian"></i>
+		</div>
 		<div class="bg-image" :style="bgStyle" ref="bgImage">
 			<h1 class="title" ref="title" v-html="title"></h1>
 			<div class="play-wrapper" ref="playBtn" v-show="songs.length">
@@ -175,6 +177,16 @@ const TITLE_NEXT_SIZE = 18
         display: block
         padding: 10px
         font-size: $font-size-large-x
+        color: $color-text
+    .detail
+      position absolute
+      top: 0
+      right: 6px
+      z-index: 50
+      .icon-sandian
+        display: block
+        padding: 10px
+        font-size: $font-size-large
         color: $color-text
     .title
       position: absolute

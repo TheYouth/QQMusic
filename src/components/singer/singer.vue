@@ -74,10 +74,10 @@ export default {
 		}	
 	},
 	created(){
-		setTimeout(()=>{
-			this._getSingerList()
-		},1000)
-		//this._getSingerList()
+		// setTimeout(()=>{
+		// 	this._getSingerList()
+		// },1000)
+		this._getSingerList()
 	},
 	methods: {
 		_getSingerList(){

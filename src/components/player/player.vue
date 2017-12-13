@@ -11,6 +11,9 @@
           </div>
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="singerName"></h2>
+          <div class="detail">
+            <i class="icon-sandian"></i>
+          </div>
         </div>
         <div class="middle" ref="middle" 
         @touchstart.prevent="touchstart" @touchmove.prevent="touchmove" @touchend="touchend">
@@ -371,7 +374,7 @@ const STAY_LINE = 6
       top: 0
       bottom: 0
       z-index: 150
-      background: $color-background
+      background: $color-text-ll
       .background
         position: absolute
         left: 0
@@ -393,6 +396,16 @@ const STAY_LINE = 6
             display: block
             padding: 9px
             font-size: $font-size-large-xl
+            color: $color-text
+        .detail
+          position absolute
+          top: 0
+          right: 6px
+          z-index: 50
+          .icon-sandian
+            display: block
+            padding: 10px
+            font-size: $font-size-large-x
             color: $color-text
         .title
           width: 70%

@@ -106,9 +106,10 @@ import {mapGetters} from 'vuex'
         .name
           no-wrap()
           color: $color-text-l
+          width: 240px
         .desc
           no-wrap()
           margin-top: 4px
           color: $color-text-d
-          width: 280px
+          width: 240px
 </style>
