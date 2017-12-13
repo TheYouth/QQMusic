@@ -1,6 +1,12 @@
 import * as types from './mutations-types'
 
 const mutations = {
+	[types.SET_RANK](state, payload) {
+		state.rank = payload
+	},
+	[types.SET_RECOMMEND](state, payload) {
+		state.recommend = payload
+	},
 	[types.SET_SINGER](state, payload) {
 		state.singer = payload
 	},

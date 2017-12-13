@@ -1,8 +1,14 @@
 <template>
   <div class="song-list">
     <ul>     
-      <li v-for="(song, index) in songs" class="item" @click="selectSong(song, index)" :class="{hightLight: song.id === currentSong.id}">
-        <song-rank-simple :index="index" >
+      <li v-for="(song, index) in songs" class="item" @click="selectSong(song, index)" :class="{hightLight: song.id === currentSong.id}">      
+        <song-rank-complex :index="index"  v-if="showWhich()">
+          <div class="content">
+            <h2 class="name">{{song.name}}</h2>
+            <p class="desc">{{getDesc(song)}}</p>
+          </div>
+        </song-rank-complex>
+         <song-rank-simple :index="index" v-else>
           <div class="content">
             <h2 class="name">{{song.name}}</h2>
             <p class="desc">{{getDesc(song)}}</p>
@@ -18,6 +24,7 @@
 
 <script type="text/javascript">
 import SongRankSimple from '@/baseComponents/songRank/songranksimple'
+import SongRankComplex from '@/baseComponents/songRank/songrankcomplex'
 import {mapGetters} from 'vuex'
 // 基础组件，不涉及业务逻辑，点击后向父组件song.vue派发事件
 	export default {
@@ -41,15 +48,13 @@ import {mapGetters} from 'vuex'
       selectSong( song, index ){
         this.$emit( 'selectSong', song, index )
       },
-      show(){
-        return 
+      showWhich(){
+        return this.$route.matched[0].path ==='/rank'
       }
     },
-    mounted(){
-      //console.log(this.currentSong.id)
-    },
     components: {
-      SongRankSimple
+      SongRankSimple,
+      SongRankComplex
     }
 	}
 </script>
@@ -80,25 +85,6 @@ import {mapGetters} from 'vuex'
         position: absolute
         right: 2px
         font-size: $font-size-large
-      // .rank
-      //   flex: 0 0 25px
-      //   width: 25px
-      //   margin-right: 30px
-      //   text-align: center
-      //   .icon
-      //     display: inline-block
-      //     width: 25px
-      //     height: 24px
-      //     background-size: 25px 24px
-      //     &.icon0
-      //       bg-image('first')
-      //     &.icon1
-      //       bg-image('second')
-      //     &.icon2
-      //       bg-image('third')
-      //   .text
-      //     color: $color-theme
-      //     font-size: $font-size-large
       .content
         flex: 1
         line-height: 20px

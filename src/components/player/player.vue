@@ -502,11 +502,11 @@ const STAY_LINE = 6
             width: 8px
             height: 8px
             border-radius: 50%
-            background: $color-text-l
+            background: $color-text-d
             &.active
               width: 20px
               border-radius: 5px
-              background: $color-text-ll
+              background: $color-background
         .progress-wrapper
           display: flex
           align-items: center
@@ -620,7 +620,7 @@ const STAY_LINE = 6
           font-size: 32px
           position: absolute
           left: 0px
-          top: 2px
+          top: 0px
   @keyframes rotate
     0%
       transform: rotate(0)

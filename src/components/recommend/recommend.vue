@@ -13,37 +13,40 @@
    		</slider>
    	</div>
    	<div class="recommend-list">
-   		<h1 class="list-title">_—_—_—_—_ 热门歌单 _—_—_—_—_</h1>
+   		<h1 class="list-title">热门歌单</h1>
    		<ul>
-        <li v-for="item in songsList" class="item">
+        <li v-for="item in songsList" class="item" @click="chooseItem(item)">
           <div class="icon">
-            <img width="60" v-lazy="item.picUrl">
+            <img width="60" v-lazy="item.imgurl">
           </div>
           <div class="text">
-            <h2 class="name" v-html="item.songListDesc"></h2>
-            <p class="desc" v-html="item.songListAuthor"></p>
+            <h2 class="name" v-html="item.dissname"></h2>
+            <p class="desc" v-html="item.creator.name"></p>
           </div>
         </li> 
       </ul>
    	</div>
     </div>
-
     <div class="loading-container" v-show="!songsList.length">
       <loading></loading>
     </div>
+
    </scroll>
+   <router-view></router-view>
  </div>
+
 </template>
 
 <script>
 import getRecommend from '@/api/recommend'
-import getSongsList from '@/api/songslist'
+import getDesList from '@/api/deslist'
 import getLyric from '@/api/lyric'
 import {ERR_OK} from '@/api/config'
 import Slider from '@/baseComponents/slider/slider'
 import Scroll from '@/baseComponents/scroll/scroll'
 import Loading from '@/baseComponents/loading/loading'
 import {adaptBottomMixin} from '@/common/js/mixins'
+import {mapMutations} from 'vuex'
 export default {	
   mixins: [adaptBottomMixin],
   data(){
@@ -54,10 +57,7 @@ export default {
   },
 	created(){
 		this._getRecommend()
-    setTimeout(() => {
-      this._getSongsList()
-    }, 1000)
-    // this._getSongsList()
+    this._getDesList()
 	},	
 	methods: {
 		_getRecommend(){
@@ -69,15 +69,25 @@ export default {
 				console.log(err)
 			})
 		 },
-    _getSongsList(){
-      getSongsList().then( (res) => {
+    _getDesList(){
+      getDesList().then( (res) => {
         if(res.code === ERR_OK){
-          this.songsList = res.data.songList
+          this.songsList = res.data.list
         }
       } ).catch( (err) => {
         console.log(err)
       } )
     },
+    chooseItem(item) {
+      console.log(item)
+      this.$router.push({
+        path: `/recommend/${item.id}`
+      })
+      this.setRecommend(item)
+    },
+    ...mapMutations({
+      setRecommend: 'SET_RECOMMEND'
+    }),
     // 重写mixins方法
     adaptBottom(playList){
         const bottom = this.playList.length > 0 ? '40px' : ''

@@ -1,3 +1,7 @@
+export const rank = state => state.rank
+
+export const recommend = state => state.recommend
+
 export const singer = state => state.singer
 
 export const playing = state => state.playing

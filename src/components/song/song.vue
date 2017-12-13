@@ -196,6 +196,7 @@ const TITLE_NEXT_SIZE = 18
       width: 100%
       no-wrap()
       text-align: center
+      height: 40px
       line-height: 40px
       //font-size: $font-size-large  18px 
       font-size: 30px

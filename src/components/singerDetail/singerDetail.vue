@@ -45,6 +45,7 @@ export default {
       getSingerDetail( this.singer.id ).then((res) => {
         
         this.songsList = this._sortSongsList( res.data.list )
+        console.log(res.data.list)
 
       }).catch((err) => {
         console.log(err)

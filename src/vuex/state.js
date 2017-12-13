@@ -1,6 +1,8 @@
 import {playMode} from '@/common/js/config'
  
 const state = {
+	rank: {},
+	recommend: {},
 	singer: {},
 	playing: false,
   	fullScreen: false,
@@ -8,6 +10,7 @@ const state = {
   	sequenceList: [],  //默认的播放列表（顺序播放）
   	mode: playMode.sequence,
   	currentIndex: -1,
+
 }
 
 export default state
