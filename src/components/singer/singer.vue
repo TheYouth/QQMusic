@@ -74,17 +74,15 @@ export default {
 		}	
 	},
 	created(){
-		// setTimeout(()=>{
-		// 	this._getSingerList()
-		// },1000)
-		this._getSingerList()
+		setTimeout(()=>{
+			this._getSingerList()
+		},500)
 	},
 	methods: {
 		_getSingerList(){
 			getSingerList().then( (res) => {
 				if( res.code === ERR_OK ){
 					this.singerList = this._sortSingerList(res.data.list)
-					//console.log(this.singerList)
 				}
 			} ).catch( (err) => {
 				console.log(err)
@@ -137,7 +135,6 @@ export default {
 		// scroll组件触发scroll事件
 		_scroll(pos){
 			this.scrollY = pos.y
-			//console.log(this.scrollY)
 		},
 		// 计算高度
 		_caculateHeight(){
@@ -176,7 +173,7 @@ export default {
 			}, 20);
 		},
 		scrollY(val, oldVal) {
-			//console.log(val, oldVal)
+
 			const _heights = this.listHeight
 
 			// 正常在中间滚动时

@@ -32,6 +32,7 @@ export default {
   },
   created(){
   	this._getDesDetail()
+  	
   },
   methods: {
   	_getDesDetail(){
@@ -44,6 +45,7 @@ export default {
   		getDesDetail(this.recommend.dissid).then((res) => {
   			if( res.code === ERR_OK ){
   				this.recommendList = this._sortSongsList(res.cdlist[0].songlist) 
+
   			}			
   		})
   	},

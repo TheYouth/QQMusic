@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <m-header></m-header>
+    <d-header></d-header>
     <tab></tab>
     <keep-alive>
     	<router-view></router-view>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import MHeader from '@/components/m-header/m-header'
+import DHeader from '@/components/header/header'
 import Tab from '@/components/tab/tab'
 import Player from '@/components/player/player'
 export default {
   components: {
-  	MHeader,
+  	DHeader,
   	Tab,
     Player
   }

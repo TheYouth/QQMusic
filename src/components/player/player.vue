@@ -12,7 +12,7 @@
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="singerName"></h2>
           <div class="detail">
-            <i class="icon-sandian"></i>
+            <i class="icon-share"></i>
           </div>
         </div>
         <div class="middle" ref="middle" 
@@ -402,10 +402,10 @@ const STAY_LINE = 6
           top: 0
           right: 6px
           z-index: 50
-          .icon-sandian
+          .icon-share
             display: block
             padding: 10px
-            font-size: $font-size-large-x
+            font-size: $font-size-large-xl
             color: $color-text
         .title
           width: 70%
@@ -620,7 +620,7 @@ const STAY_LINE = 6
           font-size: 32px
           position: absolute
           left: 0px
-          top: 0px
+          top: 1px
   @keyframes rotate
     0%
       transform: rotate(0)

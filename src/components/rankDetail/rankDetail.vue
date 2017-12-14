@@ -23,7 +23,7 @@ import {ERR_OK} from '@/api/config'
       },
       bgImage(){
         if( this.rankDetail.length ){  //数据加载完成后才能获得，否则会报错
-          return this.rankDetail[0].image
+          return this.rankDetail[1].image
         }
       }
     },

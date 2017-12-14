@@ -4,14 +4,14 @@
       <li v-for="(song, index) in songs" class="item" @click="selectSong(song, index)" :class="{hightLight: song.id === currentSong.id}">      
         <song-rank-complex :index="index"  v-if="showWhich()">
           <div class="content">
-            <h2 class="name">{{song.name}}</h2>
-            <p class="desc">{{getDesc(song)}}</p>
+            <h2 class="name" :class="{hightLight: song.id === currentSong.id}">{{song.name}}</h2>
+            <p class="desc" :class="{hightLight: song.id === currentSong.id}">{{getDesc(song)}}</p>
           </div>
         </song-rank-complex>
          <song-rank-simple :index="index" v-else>
           <div class="content">
-            <h2 class="name">{{song.name}}</h2>
-            <p class="desc">{{getDesc(song)}}</p>
+            <h2 class="name" :class="{hightLight: song.id === currentSong.id}">{{song.name}}</h2>
+            <p class="desc" :class="{hightLight: song.id === currentSong.id}">{{getDesc(song)}}</p>
           </div>
         </song-rank-simple>
         <div class="currentIcon" v-if="song.id === currentSong.id">
@@ -71,7 +71,7 @@ import {mapGetters} from 'vuex'
       height: 64px
       font-size: $font-size-medium
       position: relative
-      &.hightLight
+      .hightLight
         color: $color-theme !important
       &:after
         position: absolute
@@ -85,6 +85,7 @@ import {mapGetters} from 'vuex'
         position: absolute
         right: 2px
         font-size: $font-size-large
+        color: $color-theme
       .content
         flex: 1
         line-height: 20px
@@ -97,5 +98,5 @@ import {mapGetters} from 'vuex'
           no-wrap()
           margin-top: 4px
           color: $color-text-d
-          width: 240px
+          width: 300px
 </style>

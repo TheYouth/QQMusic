@@ -56,9 +56,11 @@
       .icon-first
         color: red
         font-size: $font-size-large-xl
+        line-height: 25px
       .icon-second
         color: $color-sub-theme
         font-size: $font-size-large-x
+        line-height: 23px
       .icon-third
         color: $color-theme
         font-size: $font-size-large

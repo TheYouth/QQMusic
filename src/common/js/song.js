@@ -47,7 +47,7 @@ export function createSong( musicData ){
 	})
 }
 // musicData里面singer的数据结构是数组，我要的数据结构是字符串，并且多个歌手用'/'拼接
-function switchToString(singer) {
+export function switchToString(singer) {
 	let ret = []
 	if(!singer){
 		return ''

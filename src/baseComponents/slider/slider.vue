@@ -19,7 +19,6 @@ export default {
 			currentPageIndex: 0
 		}
 	},
-	//name: 'slider',
 	props: {
 		loop:{//循环
 			type: Boolean,
@@ -54,7 +53,6 @@ export default {
 	},
 	methods: {
 		_setSliderWidth(onResize){  //初始化slider前计算并设置宽度
-
 			this.children = this.$refs.sliderGroup.children  // 获取子元素
 			let totalWidth = 0  //图片水平排列总宽度
 			let sliderWidth = this.$refs.slider.clientWidth  //父容器宽度

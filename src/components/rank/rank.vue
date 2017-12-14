@@ -60,6 +60,7 @@ import {mapMutations} from 'vuex'
     	...mapMutations({
     		setRank: 'SET_RANK'
     	}),
+
     	// 重写mixins方法
 	    adaptBottom(playList){
 	        const bottom = this.playList.length > 0 ? '40px' : ''

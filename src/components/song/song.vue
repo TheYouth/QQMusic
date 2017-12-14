@@ -4,7 +4,7 @@
 			<i class="icon-fanhui"></i>
 		</div>
 		<div class="detail">
-			<i class="icon-sandian"></i>
+			<i class="icon-share"></i>
 		</div>
 		<div class="bg-image" :style="bgStyle" ref="bgImage">
 			<h1 class="title" ref="title" v-html="title"></h1>
@@ -183,10 +183,10 @@ const TITLE_NEXT_SIZE = 18
       top: 0
       right: 6px
       z-index: 50
-      .icon-sandian
+      .icon-share
         display: block
         padding: 10px
-        font-size: $font-size-large
+        font-size: $font-size-large-x
         color: $color-text
     .title
       position: absolute

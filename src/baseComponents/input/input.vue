@@ -1,0 +1,66 @@
+<template>
+  <div class="search-wrapper">
+    <i class="icon-search"></i>
+    <input ref="query" class="box" :placeholder="placeholder" v-model="searchTxt"/>
+    <i class="icon-dismiss" v-show="searchTxt" @click="clearTXT()"></i>
+  </div>
+</template>
+
+<script>
+  export default {
+      props: {
+        placeholder: {
+          type: String,
+          default: '搜索歌曲、歌单、专辑'
+        }
+      },
+      data(){
+        return {
+          searchTxt: ''
+        }
+      },
+      methods:{
+        clearTXT(){
+          this.searchTxt = ''
+        },
+        setTXT(k){  //让父组件调用这个方法
+          this.searchTxt = k
+        }
+      },
+      created(){
+        this.$watch( 'searchTxt', (newTXT) => {
+          this.$emit( 'onTXTchange', newTXT )
+        })
+      }
+  }
+</script>
+
+<style scoped lang="stylus" rel="stylesheet/stylus">
+  @import "../../common/stylus/variable"
+
+  .search-wrapper
+    display: flex
+    align-items: center
+    box-sizing: border-box
+    width: 100%
+    padding: 0 6px
+    height: 40px
+    background: $color-highlight-background
+    border-radius: 6px
+    .icon-search
+      font-size: $font-size-large-xl
+      color: $color-text-d
+    .box
+      flex: 1
+      margin: 0 5px
+      line-height: 18px
+      background: $color-highlight-background
+      color: $color-text-l
+      font-size: $font-size-medium
+      &::placeholder
+        color: $color-text-d
+      outline: 0
+    .icon-dismiss
+      font-size: $font-size-large-x
+      color: $color-text-d
+</style>
