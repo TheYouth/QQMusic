@@ -1,7 +1,7 @@
 <template>
   <div class="search-wrapper">
     <i class="icon-search"></i>
-    <input ref="query" class="box" :placeholder="placeholder" v-model="searchTxt"/>
+    <input ref="input" class="box" :placeholder="placeholder" v-model="searchTxt"/>
     <i class="icon-dismiss" v-show="searchTxt" @click="clearTXT()"></i>
   </div>
 </template>
@@ -11,7 +11,7 @@
       props: {
         placeholder: {
           type: String,
-          default: '搜索歌曲、歌单、专辑'
+          default: 'Doge一下'
         }
       },
       data(){
@@ -28,7 +28,7 @@
         }
       },
       created(){
-        this.$watch( 'searchTxt', (newTXT) => {
+        this.$watch( 'searchTxt', (newTXT, oldTXT) => {
           this.$emit( 'onTXTchange', newTXT )
         })
       }

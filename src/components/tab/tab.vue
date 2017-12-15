@@ -30,6 +30,7 @@ export default {
     height: 44px
     line-height: 44px
     font-size: $font-size-medium-x
+    box-shadow: 0 3px 3px 0 rgb(220,220,220)
     .tab-item
       flex: 1
       text-align: center

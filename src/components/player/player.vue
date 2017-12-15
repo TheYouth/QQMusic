@@ -345,7 +345,10 @@ const STAY_LINE = 6
     this.touchMove = {}  //这个对象用于存储左右滑动时的信息
    },
    watch: {  
-    currentSong(){  //在currentSong变化时执行播放，注意在dom ready后才能执行play方法
+    currentSong(newSong, oldSong){  //在currentSong变化时执行播放，注意在dom ready后才能执行play方法
+      if (!newSong.id || newSong.id === oldSong.id) {
+          return
+      }
       this.currentLyric && this.currentLyric.stop() //lyricBug:修复切歌时歌词跳动BUG，实际上是在歌词改变前清除旧的定时器
       this.$nextTick(() => {
         this.$refs.audio.play()

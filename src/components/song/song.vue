@@ -93,6 +93,7 @@ const TITLE_NEXT_SIZE = 18
 				})
 			},
 			playAll(){
+				console.log(this.songs)
 				this.toPlay({
 					list: this.songs,
 					index: 0

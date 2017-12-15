@@ -3,7 +3,7 @@
 		<div class="search-box-wrapper">
 			<s-input ref="sinput" @onTXTchange="onTXTchange"></s-input>
 		</div>
-		<div class="hotkey-wrapper">
+		<div class="hotkey-wrapper" v-show="!searchTxt">
 			<div class="shortcut">
 				<div class="hotkey">
 					<i class="icon-huo"></i>
@@ -17,9 +17,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="search-result"  v-show="!searchTxt">
+		<div class="search-result" v-show="searchTxt">
 			<result :searchTxt="searchTxt"></result>
 		</div>
+	<router-view></router-view>
 	</div>
 </template>
 
@@ -45,7 +46,7 @@ export default {
 	methods: {
 		_getHotKey(){
 			getHotKey().then((res) => {
-				this.hotKey = res.data.hotkey.slice(0,12)
+				this.hotKey = res.data.hotkey.slice(0,20)
 				this.hotKey.unshift({
 					"k": res.data.special_key,
 					"url": res.data.special_url
