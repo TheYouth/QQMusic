@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import {throttle} from '@/common/js/utils'
   export default {
       props: {
         placeholder: {
@@ -25,12 +26,15 @@
         },
         setTXT(k){  //让父组件调用这个方法
           this.searchTxt = k
+        },
+        _blur(){  //让父组件调用这个方法
+          this.$refs.input.blur()
         }
       },
       created(){
-        this.$watch( 'searchTxt', (newTXT, oldTXT) => {
+        this.$watch( 'searchTxt', throttle((newTXT, oldTXT) => {
           this.$emit( 'onTXTchange', newTXT )
-        })
+        }, 300))
       }
   }
 </script>

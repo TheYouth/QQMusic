@@ -25,7 +25,7 @@
     line-height: 20px
     margin-right: 10px
     color: $color-text-l
-    font-size: $font-size-medium  
-
+    font-size: $font-size-medium
+    width: 16px
 
 </style>

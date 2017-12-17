@@ -85,11 +85,12 @@ import {mapMutations} from 'vuex'
       overflow: hidden
       .item
         display: flex
-        margin: 0 20px
-        padding-top: 20px
+        margin: 20px 20px 0 20px
         height: 100px
+        border-radius: 10px
+        overflow: hidden
         &:last-child
-          padding-bottom: 20px
+          padding-bottom: 40px
         .icon
           flex: 0 0 100px
           width: 100px

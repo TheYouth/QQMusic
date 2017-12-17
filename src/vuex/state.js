@@ -10,7 +10,7 @@ const state = {
   	sequenceList: [],  //默认的播放列表（顺序播放）
   	mode: playMode.sequence,
   	currentIndex: -1,
-
+  	searchHistory: []
 }
 
 export default state

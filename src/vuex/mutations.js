@@ -27,6 +27,9 @@ const mutations = {
 	},
 	[types.SET_CURRENT_INDEX](state, index) {  //当前播放歌曲索引（index）
 	  state.currentIndex = index
+	},
+	[types.SET_SEARCH_HISTORY](state, histroy) {  //搜索列表
+	  state.searchHistroy = histroy
 	}
 }
 

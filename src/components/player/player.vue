@@ -65,7 +65,7 @@
               <i @click="nextSong" class="icon-xiayiqu"></i>
             </div>
             <div class="icon i-right">
-              <i class="icon-xihuan"></i>
+              <i class="icon-bofangqi_shouyegequliebiao_"></i>
             </div>
           </div>
         </div>
@@ -74,7 +74,9 @@
     <transition name="mini">
       <div class="mini-player" v-show="!fullScreen" @click="show_fullScreen">
         <div class="icon">
-          <img width="40" :src="currentSong.image" :class=rotateCD>
+           <little-progress :percent="progressPercent" :radius="radius">
+          <img width="40" :src="currentSong.image" :class="rotateCD">
+           </little-progress>
         </div>
         <div class="text">
           <h2 class="name" v-html="currentSong.name"></h2>
@@ -82,12 +84,10 @@
           <p class="desc" v-else="playing">{{playingLyricTXT}}</p>
         </div>       
         <div class="control">
-          <little-progress :percent="progressPercent" :radius="radius">
-            <i class="icon-mini" @click.stop="togglePlay" :class="miniToggleIcon"></i>
-          </little-progress>
+          <i class="icon-mini" @click.stop="togglePlay" :class="miniToggleIcon"></i>
         </div>       
         <div class="control">
-          <i class="icon-bofangqi_shouyegequliebiao_"></i>
+          <i class="icon-xihuan"></i>
         </div>
       </div>
     </transition>
@@ -120,7 +120,7 @@ const STAY_LINE = 6
       return {
         canBePlayed: false,
         currentTime: 0,
-        radius: 32,
+        radius: 48,
         currentLyric: null,
         currentLineNum: 0,
         currentDot: 'cd',
@@ -382,11 +382,10 @@ const STAY_LINE = 6
         position: absolute
         left: 0
         top: 0
-        width: 100%
-        height: 100%
+        width: 180%
         z-index: -1
-        opacity: 0.6
-        filter: blur(20px)
+        opacity: 0.7
+        filter: blur(15px)
       .top
         position: relative
         margin-bottom: 25px
@@ -437,10 +436,6 @@ const STAY_LINE = 6
           width: 100%
           height: 0
           padding-top: 80%
-          // &.cd-enter-active, &.cd-leave-active
-          //   transition: all 0.4s cubic-bezier(.6,.35,.4,1.26)
-          // &.cd-enter, &.cd-leave-to
-          //   transform: translate3d(100%,0,0)
           .cd-wrapper
             position: absolute
             left: 10%
@@ -548,8 +543,9 @@ const STAY_LINE = 6
               font-size: 40px
           .i-right
             text-align: left
-          .icon-favorite
-            color: $color-sub-theme
+          .icon-bofangqi_shouyegequliebiao_
+            color: $color-theme
+            font-size: 40px !important
       &.full-enter-active, &.full-leave-active
         transition: all 0.4s
         .top, .bottom
@@ -586,6 +582,9 @@ const STAY_LINE = 6
         padding: 0 10px 0 20px
         img
           border-radius: 50%
+          position: absolute
+          top: 4px
+          left: 4px
           &.play
             animation: rotate 10s linear infinite
           &.pause
@@ -608,22 +607,21 @@ const STAY_LINE = 6
           color: $color-text-d
       .control
         flex: 0 0 30px
-        //width: 30px
         padding: 0 10px
-        .icon-play, .icon-pause, .icon-bofangqi_shouyegequliebiao_
+        .icon-play, .icon-pause, .icon-xihuan
           display: inline-block
           font-size: 32px
           width:32px
           height:32px
-          color: $color-theme-d
-        .icon-bofangqi_shouyegequliebiao_
           color: $color-theme
-          font-size: 40px
+          z-index:-10
+        .icon-xihuan
+          color: $color-theme
+          margin-bottom: 6px
         .icon-mini
           font-size: 32px
-          position: absolute
           left: 0px
-          top: 1px
+          top: 0px
   @keyframes rotate
     0%
       transform: rotate(0)

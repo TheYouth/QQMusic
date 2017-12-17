@@ -18,7 +18,7 @@
 			</div>
 		</div>
 		<div class="search-result" v-show="searchTxt">
-			<result :searchTxt="searchTxt"></result>
+			<result :searchTxt="searchTxt" @_beforeScroll="_beforeScroll"></result>
 		</div>
 	<router-view></router-view>
 	</div>
@@ -63,6 +63,9 @@ export default {
 		},
 		onTXTchange(newTXT){
 			this.searchTxt = newTXT
+		},
+		_beforeScroll(){
+			this.$refs.sinput._blur()
 		}
 	}
 }
@@ -73,10 +76,10 @@ export default {
  @import "../../common/stylus/mixin"
   .search
     .search-box-wrapper
-      margin: 20px
+      margin: 10px
     .hotkey-wrapper
       position: fixed
-      top: 178px
+      top: 155px
       bottom: 0
       width: 100%
       .shortcut
@@ -93,6 +96,7 @@ export default {
             margin-bottom: 20px
             font-size: $font-size-medium
             color: $color-text-l
+            font-weight: bold
           .item
             display: inline-block
             padding: 5px 10px

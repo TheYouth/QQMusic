@@ -16,7 +16,8 @@ export default {
 	data(){
 		return {
 			dots: [],
-			currentPageIndex: 0
+			currentPageIndex: 0,
+			sliderHeight: 0
 		}
 	},
 	props: {
@@ -39,12 +40,14 @@ export default {
 			this._initDots()
 			this._initSlider()
 			this.autoPlay && this._autoPlay()
+			this.computedHeight()
 		}, 20)
 		// 改变窗口大小轮播图自适应
 		window.addEventListener( 'resize', () => {
 			if( !this.slider ) {return} // 如果没有初始化return
 			this._setSliderWidth(true)  //防止复制多余的dom
 			this.slider.refresh()  //调用better-scroll内置refresh方法
+			this.computedHeight()
 		} )
 	},
 	// 释放内存
@@ -52,10 +55,16 @@ export default {
 		clearInterval(this.timer)
 	},
 	methods: {
+		computedHeight(){
+			this.sliderHeight = this.$refs.slider.clientHeight
+			this.$emit( 'sliderHeight',  this.sliderHeight)
+			// console.log(this.sliderHeight)
+		},
 		_setSliderWidth(onResize){  //初始化slider前计算并设置宽度
 			this.children = this.$refs.sliderGroup.children  // 获取子元素
 			let totalWidth = 0  //图片水平排列总宽度
 			let sliderWidth = this.$refs.slider.clientWidth  //父容器宽度
+
 			for( let i = 0; i < this.children.length; i++ ){
 				let child = this.children[i]
 				addClass( child, 'slider-item' )  //添加class
@@ -141,8 +150,6 @@ export default {
         border-radius: 50%
         background: $color-text-l
         &.active
-          width: 20px
-          border-radius: 5px
           background: $color-text-ll
 
 </style>

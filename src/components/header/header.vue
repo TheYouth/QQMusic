@@ -1,7 +1,9 @@
 <template>
   <div class="m-header">
+    <i class="icon-geren"></i>
     <div class="icon"></div>
-    <h1 class="text">Doge音乐</h1>
+    <h1 class="text">Doge·音乐</h1>
+    <i class="icon-mulu"></i>
 <!--     <router-link tag="div" class="mine" to="/user">
       <i class="icon-mine"></i>
     </router-link> -->
@@ -23,6 +25,20 @@
     color: $color-theme
     font-size: 0
     background: $color-theme
+    vertical-align: middle
+    .icon-geren, .icon-mulu
+      color: $color-text
+      position: absolute
+      top: 50%
+      transform: translate(0, -50%)
+    .icon-geren
+      float: left     
+      left:10px
+      font-size: 30px 
+    .icon-mulu
+      float: right
+      right:10px
+      font-size: 20px
     .icon
       display: inline-block
       vertical-align: top
@@ -38,7 +54,7 @@
       vertical-align: top
       line-height: 44px
       font-size: $font-size-large
-      color: $color-background
+      color: $color-text
     .mine
       position: absolute
       top: 0
@@ -47,5 +63,5 @@
         display: block
         padding: 12px
         font-size: 20px
-        color: $color-theme
+        color: $color-text
 </style>

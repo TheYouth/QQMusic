@@ -29,13 +29,17 @@ export default {
       default: false
     },
     pullDownRefresh: {
-      type: null,
+      type: Boolean,
       default: false
     },
     pullUpLoad: {
-      type: null,
+      type: Boolean,
       default: false
     },
+    beforeScrollStart: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     data(){
@@ -81,6 +85,12 @@ export default {
               _this.$emit('pullDownRefresh')
             }
           })
+        }
+        // 滚动收起键盘
+        if( this.beforeScrollStart ) {
+          this.scroll.on( 'beforeScrollStart', () => {
+            this.$emit( 'beforeScroll' )
+          } )
         }
     },
     _enable(){

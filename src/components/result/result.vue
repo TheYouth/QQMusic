@@ -1,5 +1,7 @@
 <template>
-  <scroll class="result" :data="result" :pullUpLoad="pullUpLoad" @pullUpLoad="_pullUpLoad" ref="result">
+  <div ref="wrapper" class="wrapper">
+  <scroll class="result" :data="result" :pullUpLoad="pullUpLoad" @pullUpLoad="_pullUpLoad" 
+  :beforeScrollStart="beforeScrollStart" @beforeScroll="_beforeScroll" ref="result">
     <ul class="result-list">
       <li class="result-item" v-for="item in result" @click="selectItem(item)">
         <div class="icon">
@@ -9,9 +11,13 @@
           <p class="text" v-html="showName(item)" :class="{hightLight: item.type === 'singer'}"></p>
         </div>
       </li>
-      <loading v-show="loadMore"></loading>
-    </ul>   
+      <loading v-show="loadMore" :title="title"></loading>
+    </ul>
+    <div class="cannotfind-wrapper">
+      <can-not-find v-show="!loadMore && !result.length"></can-not-find> 
+    </div>  
   </scroll>
+  </div>
 </template>
 
 <script>
@@ -20,10 +26,13 @@ import {ERR_OK} from '@/api/config'
 import {createSong} from '@/common/js/song'
 import Scroll from '@/baseComponents/scroll/scroll'
 import Loading from '@/baseComponents/loading/loading'
+import CanNotFind from '@/baseComponents/cannotfind/cannotfind'
 import Singer from '@/common/js/singer'
 import {mapMutations, mapActions} from 'vuex'
+import {adaptBottomMixin} from '@/common/js/mixins'
 const PERPAGE = 20
 export default {
+  mixins: [adaptBottomMixin],
   props: {
     searchTxt: {
       type: String,
@@ -39,7 +48,9 @@ export default {
       page: 1,
       result: [],
       pullUpLoad: true,
-      loadMore: true
+      beforeScrollStart: true,
+      loadMore: true,
+      title: ''
     }
   },
   methods: {
@@ -122,13 +133,23 @@ export default {
        }else {
         this.searchToPlay(item)
        }
+       this.setHistroy(item)
     },
     ...mapMutations({
-      setSinger: 'SET_SINGER'
+      setSinger: 'SET_SINGER',
+      setHistroy: 'SET_SEARCH_HISTORY'
     }),
     ...mapActions([
       'searchToPlay'
-    ])
+    ]),
+    _beforeScroll(){
+      this.$emit( '_beforeScroll' )
+    },
+    adaptBottom(playList){
+        const bottom = this.playList.length > 0 ? '60px' : ''
+        this.$refs.wrapper.style.bottom = bottom
+        this.$refs.result._refresh()
+    }
   },
   watch: {
     searchTxt(){
@@ -137,7 +158,8 @@ export default {
   },
   components: {
     Scroll,
-    Loading
+    Loading,
+    CanNotFind
   }
 }
 </script>
@@ -145,7 +167,11 @@ export default {
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/variable"
   @import "../../common/stylus/mixin"
-
+.wrapper
+  position: fixed
+  width: 100%
+  top: 150px
+  bottom: 0
   .result
     height: 100%
     overflow: hidden
@@ -173,9 +199,8 @@ export default {
         .text
           no-wrap()
           font-size: $font-size-medium
-    .no-result-wrapper
+    .cannotfind-wrapper
       position: absolute
       width: 100%
-      top: 50%
-      transform: translateY(-50%)
+      top: 20%
 </style>

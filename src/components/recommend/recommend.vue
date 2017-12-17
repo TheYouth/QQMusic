@@ -1,13 +1,26 @@
 <template>
 <div class="recommend" ref="recommend">
+   <div class="fixed-wrapper" ref="fixedWrapper">
+    <i class="icon-huo"></i>
+    <h1 class="fixed-title" ref="fixedTitle" v-show="pullupSH">热门歌单</h1>
+   </div>
    <scroll ref="scroll" class="recommend-content" 
-      :data="songsList" :listen-scroll="listenScroll" :probe-type="probeType" @scroll="_scroll"
+      :data="songsList" 
+      :listen-scroll="listenScroll" 
+      :pullDownRefresh="pullDownRefresh"
+      :probe-type="probeType" 
+      @scroll="_scroll"
+      @pullDownRefresh="_pullDownRefresh"
       >
+
     <div class="wrapper">
-      <!-- <h1 class="fixed-title" ref="fixedTitle">热门歌单</h1> -->
+      <div class="loading-wrapper">
+        <loading v-show="pullDownRefresh" :title="loadingTitle"></loading>
+      </div>
+      
      	<!-- 获取图片数据是异步的，拿到数据前slider组件已经被mounted，不能正确渲染，需要如下判断 -->
      	<div v-if="recommends.length" class="slider-wrapper">
-     		<slider>
+     		<slider @sliderHeight="_sliderHeight">
      			<div v-for="item in recommends">
      				<a :href="item.linkUrl">
      					<img :src="item.picUrl"/>
@@ -36,6 +49,7 @@
       <loading></loading>
     </div>
    </scroll>
+   <div class="updateTip" ref="updateTip">{{updateTip}}</div>
    <router-view></router-view>
  </div>
 
@@ -57,16 +71,18 @@ export default {
     return{
       recommends: [],
       songsList: [],
-      //pulldown: true,
+      pullDownRefresh: true,
       listenScroll: true,
       probeType: 3,
-      scrollY: -1
+      scrollY: -1,   
+      loadingTitle: '下拉刷新',
+      updateTip: '暂无数据，稍后再试吧',
+      sliderHeight: 0
     }
   },
 	created(){
 		this._getRecommend()
     this._getDesList()
-    // this._pulldown()
 	},
 	methods: {
 		_getRecommend(){
@@ -99,18 +115,32 @@ export default {
     _scroll(pos){
       this.scrollY = pos.y
     },
-    // _pulldown(){
-    //   getRecommend().then((res) => {
-    //     if(res.code === ERR_OK){
-    //       this.recommends = res.data.slider.concat( this.recommends )
-    //     }
-    //   })
-    //   getDesList().then((res) => {
-    //     if(res.code === ERR_OK){
-    //       this.songsList = res.data.list.concat( this.songsList )
-    //     }
-    //   })
-    // },
+    _pullDownRefresh(){
+      console.log(1)
+      getRecommend().then((res) => {
+        if(res.code === ERR_OK){
+          this.recommends = res.data.slider.concat( this.recommends )
+        }
+      })
+      getDesList().then((res) => {
+        if(res.code === ERR_OK){
+          this.songsList = res.data.list.concat( this.songsList )
+        }
+      })
+      console.log(1)
+      this.$refs.updateTip.style.display = block
+    },
+    pullupSH(){
+       if( this.scrollY <= - this.sliderHeight ) {
+          // this.$refs.fixedTitle.style.display = `block`
+          return ture
+        }else{
+          return false
+        }
+    },
+    _sliderHeight(h){
+      this.sliderHeight = h
+    },
     // 重写mixins方法
     adaptBottom(playList){
         const bottom = this.playList.length > 0 ? '40px' : ''
@@ -120,6 +150,18 @@ export default {
 	},
   watch: {
       scrollY(val,oldVal){
+          if( val <= - this.sliderHeight ){
+            this.$refs.fixedWrapper.style.display = `block`
+            this.$refs.fixedWrapper.style.backgroundColor = `#f0f0f0`
+            
+          }else{
+            this.$refs.fixedWrapper.style.display = `none`
+          }
+          if( val > 80 ) {
+            this.loadingTitle = "释放刷新"
+          }else {
+            this.loadingTitle = ""
+          }
        }
     } ,
 	components: {
@@ -134,27 +176,43 @@ export default {
  @import "../../common/stylus/variable"
   @import "../../common/stylus/mixin"
 
-.recommend
-  position: fixed
-  width: 100%
-  top: 88px
-  bottom: 0
-  .recommend-content
-    height: 100%
-    overflow: hidden
-    .wrapper
-      position:relative
-      // .fixed-title
-      //   position: fixed
-      //   top: 0
-      //   left: 0
-      //   width: 100%
-      //   height: 65px
-      //   line-height: 65px
-      //   text-align: center
-      //   font-size: $font-size-medium-x
-      //   color: $color-theme
-      //   z-index:100
+  .recommend
+    position: fixed
+    width: 100%
+    top: 88px
+    bottom: 0
+    .fixed-wrapper
+      position: fixed
+      top: 88px
+      left: 0
+      width: 100%
+      padding-left: 20px
+      height: 60px
+      line-height: 60px
+      background: $color-background 
+      z-index: 999
+      text-align: center
+      display: none
+      box-shadow: 0 2px 5px 0 rgb(200,200,200)
+      transition: all 2s
+      .icon-huo
+        float:left
+        color: red
+        font-size:$font-size-large
+      .fixed-title       
+        font-size: $font-size-large
+        color: $color-text-l
+        margin-left: 2px
+        float: left            
+    .recommend-content
+      width: 100%
+      height: 100%
+      overflow: hidden
+      .loading-wrapper
+        position: absolute
+        top: -80px
+        left: 50%
+        transform: translate(-50%, 0)
       .slider-wrapper
         position: relative
         width: 100%
@@ -205,5 +263,15 @@ export default {
         width: 100%
         top: 50%
         transform: translateY(-50%)
+.updateTip
+  position: fixed
+  display: none
+  width: 100%
+  height: 30px
+  line-height: 30px
+  text-align: center
+  background: $color-theme
+  top: 88px
+  left: 0
       
 </style>
