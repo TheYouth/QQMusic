@@ -6,12 +6,11 @@
   <a href="https://github.com/vuejs/vue"><img src="https://img.shields.io/badge/vue-v2.5.2-green.svg" alt="Vue"></a>
   <a href="https://github.com/vuejs/vue-router"><img src="https://img.shields.io/badge/vue--router-v3.0.1-green.svg" alt="vue-router"></a>
   <a href="https://github.com/vuejs/vuex"><img src="https://img.shields.io/badge/vuex-v3.0.1-green.svg" alt="vuex"></a>
-  <a href="https://github.com/hilongjw/vue-lazyload"><img src="https://img.shields.io/badge/vue--lazyload-v1.1.4-green.svg" alt="vue-lazyload"></a>
-  
+  <a href="https://github.com/hilongjw/vue-lazyload"><img src="https://img.shields.io/badge/vue--lazyload-v1.1.4-green.svg" alt="vue-lazyload"></a> 
   <a href="https://github.com/axios/axios"><img src="https://img.shields.io/badge/axios-v0.17.1-yellow.svg" alt="axios"></a>
   <a href="https://github.com/ustbhuangyi/better-scroll"><img src="https://img.shields.io/badge/better--scroll-^1.5.5-yellow.svg" alt="better-scroll"></a>
   <a href="https://github.com/ftlabs/fastclick"><img src="https://img.shields.io/badge/fastclick-1.0.6-yellow.svg" alt="fastclick"></a>
-  <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-%5E0.54.5-yellow.svg" alt="fastclick"></a>
+  <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-%5E0.54.5-yellow.svg" alt="stylus"></a>
 </p>
 
 ### 一、播放器基本功能
