@@ -2,7 +2,7 @@
 
 > 基于Vue的音乐播放器
 
-<p>
+<p align="center">
   <a href="https://github.com/vuejs/vue"><img src="https://img.shields.io/badge/vue-v2.5.2-green.svg" alt="Vue"></a>
   <a href="https://github.com/vuejs/vue-router"><img src="https://img.shields.io/badge/vue--router-v3.0.1-green.svg" alt="vue-router"></a>
   <a href="https://github.com/vuejs/vuex"><img src="https://img.shields.io/badge/vuex-v3.0.1-green.svg" alt="vuex"></a>
@@ -24,32 +24,32 @@
 - 这个demo依然有许多隐藏的bug，还有许多功能待完善，我也会一直更新完善这个demo。
 
 ### 三、图片预览
-- 1.首页
+##### 1.首页
 ![ ](image/1.png)
 
-- 2.推荐歌单页
+##### 2.推荐歌单页
 ![ ](image/2.png)
 
-- 3.歌手页
+##### 3.歌手页
 ![ ](image/3.png)
 
-- 4.歌手详情页
+##### 4.歌手详情页
 ![ ](image/4.png)
 
-- 5.播放器
+##### 5.播放器
 ![ ](image/5.png)
 ![ ](image/6.png)
 
-- 6.排行榜
+##### 6.排行榜
 ![ ](image/7.png)
 
-- 7.排行榜详情页
+##### 7.排行榜详情页
 ![ ](image/8.png)
 
-- 8.搜索页
+##### 8.搜索页
 ![ ](image/9.png)
 
-- 9.搜索结果
+##### 9.搜索结果
 ![ ](image/10.png)
 
 ### 四、主要问题及解决方式
