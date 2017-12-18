@@ -50,8 +50,10 @@ export default {
 			this.computedHeight()
 		} )
 	},
-	// 释放内存
-	destroyed(){
+    deactivated() {
+      clearInterval(this.timer)
+    },
+	beforeDestroy(){
 		clearInterval(this.timer)
 	},
 	methods: {

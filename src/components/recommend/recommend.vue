@@ -16,8 +16,7 @@
     <div class="wrapper">
       <div class="loading-wrapper">
         <loading v-show="pullDownRefresh" :title="loadingTitle"></loading>
-      </div>
-      
+      </div>      
      	<!-- 获取图片数据是异步的，拿到数据前slider组件已经被mounted，不能正确渲染，需要如下判断 -->
      	<div v-if="recommends.length" class="slider-wrapper">
      		<slider @sliderHeight="_sliderHeight">
@@ -131,8 +130,7 @@ export default {
       this.$refs.updateTip.style.display = block
     },
     pullupSH(){
-       if( this.scrollY <= - this.sliderHeight ) {
-          // this.$refs.fixedTitle.style.display = `block`
+       if( this.scrollY <= - this.sliderHeight && this.$route === '/recommend' ) {
           return ture
         }else{
           return false

@@ -79,7 +79,7 @@ export default {
       margin: 10px
     .hotkey-wrapper
       position: fixed
-      top: 155px
+      top: 166px
       bottom: 0
       width: 100%
       .shortcut

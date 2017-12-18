@@ -170,7 +170,7 @@ export default {
 .wrapper
   position: fixed
   width: 100%
-  top: 150px
+  top: 166px
   bottom: 0
   .result
     height: 100%

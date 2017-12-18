@@ -2,7 +2,7 @@
   <div class="m-header">
     <i class="icon-geren"></i>
     <div class="icon"></div>
-    <h1 class="text">Doge·音乐</h1>
+    <h1 class="text">Music  Player</h1>
     <i class="icon-mulu"></i>
 <!--     <router-link tag="div" class="mine" to="/user">
       <i class="icon-mine"></i>
