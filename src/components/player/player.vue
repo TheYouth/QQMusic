@@ -182,7 +182,10 @@ const STAY_LINE = 6
     },
     prevSong(){
       if( !this.canBePlayed ) { return }
-       if( this.playList.length === 1 ){ this.loop() } //特殊情况：如果不判断则不能watch到currentSong的变化
+       if( this.playList.length === 1 ){ 
+       this.loopSong() 
+       return 
+       } //特殊情况：如果不判断则不能watch到currentSong的变化
       let index = this.currentIndex - 1
       if( index === -1 ) { index = this.playList.length - 1 }
       this.setCurrentIndex(index)
@@ -191,7 +194,9 @@ const STAY_LINE = 6
     },
     nextSong(){
       if( !this.canBePlayed ) { return }
-      if( this.playList.length === 1 ){ this.loop() } //特殊情况：如果不判断则不能watch到currentSong的变化
+      if( this.playList.length === 1 ){ 
+        this.loopSong() 
+        return } //特殊情况：如果不判断则不能watch到currentSong的变化
       let index = this.currentIndex + 1
       if( index === this.playList.length ) { index = 0 }
       this.setCurrentIndex(index) 
@@ -264,6 +269,7 @@ const STAY_LINE = 6
       this.mode === playMode.loop ? this.loopSong() : this.nextSong()
     },
     loopSong(){
+      this.setPlayingState(true)
       this.$refs.audio.currentTime = 0
       this.$refs.audio.play()
       this.currentLyric && this.currentLyric.seek(0)  // lyricBug:修复单曲循环结束时歌词不回到开头BUG
@@ -271,6 +277,7 @@ const STAY_LINE = 6
     // 歌词
     _getLyric(){
       this.currentSong.getLyric().then((lyric) => {
+        if( this.currentSong.lyric !== lyric ){ return } //lyricBug:修复快速切歌歌词错乱
         this.currentLyric = new Lyric(lyric, this.lyricCallback)  //创建歌词实例
         console.log(this.currentLyric) 
         if( this.playing ) {
