@@ -1,13 +1,42 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Recommend from '@/components/recommend/recommend'
-import Singer from '@/components/singer/singer'
-import Rank from '@/components/rank/rank'
-import Search from '@/components/search/search'
-import SingerDetail from '@/components/singerDetail/singerDetail'
-import RecommendDetail from '@/components/recommendDetail/recommendDetail'
-import RankDetail from '@/components/rankDetail/rankDetail'
 Vue.use(Router)
+
+const Recommend = (resolve) => {
+    import('@/components/recommend/recommend').then( (module) => {
+        resolve(module)
+    } )
+}
+const Singer = (resolve) => {
+    import('@/components/singer/singer').then( (module) => {
+        resolve(module)
+    } )
+}
+const Rank = (resolve) => {
+    import('@/components/rank/rank').then( (module) => {
+        resolve(module)
+    } )
+}
+const Search = (resolve) => {
+    import('@/components/search/search').then( (module) => {
+        resolve(module)
+    } )
+}
+const SingerDetail = (resolve) => {
+    import('@/components/singerDetail/singerDetail').then( (module) => {
+        resolve(module)
+    } )
+}
+const RecommendDetail = (resolve) => {
+    import('@/components/recommendDetail/recommendDetail').then( (module) => {
+        resolve(module)
+    } )
+}
+const RankDetail = (resolve) => {
+    import('@/components/rankDetail/rankDetail').then( (module) => {
+        resolve(module)
+    } )
+}
 
 export default new Router({
   routes: [
