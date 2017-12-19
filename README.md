@@ -9,17 +9,19 @@
   <a href="https://github.com/hilongjw/vue-lazyload"><img src="https://img.shields.io/badge/vue--lazyload-v1.1.4-green.svg" alt="vue-lazyload"></a> 
   <a href="https://github.com/axios/axios"><img src="https://img.shields.io/badge/axios-v0.17.1-yellow.svg" alt="axios"></a>
   <a href="https://github.com/ustbhuangyi/better-scroll"><img src="https://img.shields.io/badge/better--scroll-^1.5.5-yellow.svg" alt="better-scroll"></a>
-  <a href="https://github.com/ftlabs/fastclick"><img src="https://img.shields.io/badge/fastclick-1.0.6-yellow.svg" alt="fastclick"></a>
-  <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-%5E0.54.5-yellow.svg" alt="stylus"></a>
+  <a href="https://github.com/ftlabs/fastclick"><img src="https://img.shields.io/badge/fastclick-^1.0.6-yellow.svg" alt="fastclick"></a>
+  <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-^0.54.5-yellow.svg" alt="stylus"></a>
 </p>
 
 ### 一、播放器基本功能
 - [x] 歌曲播放、切歌、进度控制
 - [x] 三种播放模式的切换
 - [x] 搜索歌手、歌曲
+- [x] 上拉加载
 
 ### 二、概述
 - 上面图片可以看出，有许多页面采用了复用的组件，比如推荐歌单页（图2）、歌手详情页（图4）、排行榜详情页（图8），同时在这些组件中还有更加细分的基础组件。这样可以高度定制化组件，满足不同的需求，提高开发效率。
+- 核心是利用vuex做数据的传递，方便跟踪状态
 - 这个demo依然有许多隐藏的bug，还有许多功能待完善，我也会一直更新完善这个demo。
 
 ### 三、图片预览
@@ -51,7 +53,139 @@
 ##### 9.搜索结果
 ![ ](image/10.png)
 
-### 四、主要问题及解决方式
+### 四、项目结构
+
+```text
+│  App.vue                  //组件入口
+│  main.js                  //js入口
+│  
+├─api                       //获取数据的文件
+│      config.js                //公共配置
+│      deslist.js               //热门歌单数据
+│      lyric.js                 //歌词数据
+│      rank.js                  //排行榜数据
+│      rankDetail.js            //榜单详情数据
+│      recommend.js             //轮播图数据
+│      recommendDetail.js       //热门歌单详情数据
+│      result.js                //搜索结果数据
+│      search.js                //热搜关键词数据
+│      singerdetail.js          //歌手详情数据
+│      singerlist.js            //歌手列表数据
+│      
+├─baseComponents            //公用基础组件
+│  ├─cannotfind                 
+│  │      cannotfind.vue        //搜索结果为空
+│  │      
+│  ├─circleProgress
+│  │      circleProgress.vue    //环形进度条
+│  │      
+│  ├─input
+│  │      input.vue             //搜索框
+│  │      
+│  ├─loading
+│  │      loading.svg
+│  │      loading.vue           //加载中
+│  │      
+│  ├─music
+│  │      music.vue             //歌单列表
+│  │      
+│  ├─progress
+│  │      progress.vue          //进度条
+│  │      
+│  ├─scroll
+│  │      scroll.vue            //better-scroll的封装
+│  │      
+│  ├─slider
+│  │      slider.vue            //轮播图
+│  │      
+│  └─songRank
+│          songrankcomplex.vue  //榜单歌曲排序
+│          songranksimple.vue   //普通歌曲排序
+│          
+├─common                    //js工具库、样式、字体
+│  ├─iconfont
+│  │      demo.css
+│  │      demo_fontclass.html
+│  │      demo_symbol.html
+│  │      demo_unicode.html
+│  │      iconfont.css
+│  │      iconfont.eot
+│  │      iconfont.js
+│  │      iconfont.svg
+│  │      iconfont.ttf
+│  │      iconfont.woff
+│  │      
+│  ├─js
+│  │      config.js             //项目相关配置
+│  │      dom.js                //DOM操作方法
+│  │      jsonp.js              //jsonp的封装
+│  │      mixins.js             //vue提供的复用功能
+│  │      prefixStyle.js        //js中操作DOM添加前缀
+│  │      singer.js             //Singer类
+│  │      song.js               //Song类
+│  │      utils.js              //函数工具库
+│  │      
+│  └─stylus                 //stylus文件
+│          base.styl
+│          index.styl
+│          mixin.styl
+│          myicon.styl
+│          reset.styl
+│          variable.styl
+│          
+├─components                //业务组件
+│  ├─header             
+│  │      header.vue            //公用头部
+│  │      logo@2y.png
+│  │      logo@3y.png
+│  │      
+│  ├─player                     
+│  │      player.vue            //播放器组件
+│  │      
+│  ├─rank                       
+│  │      rank.vue              //排行榜组件
+│  │      
+│  ├─rankDetail
+│  │      rankDetail.vue        //排行榜详情组件
+│  │      
+│  ├─recommend
+│  │      recommend.vue         //首页
+│  │      
+│  ├─recommendDetail
+│  │      recommendDetail.vue   //首页详情组件
+│  │      
+│  ├─result
+│  │      result.vue            //搜索结果组件
+│  │      
+│  ├─search
+│  │      search.vue            //搜索页组件
+│  │      
+│  ├─singer
+│  │      singer.vue            //歌手列表组件
+│  │      
+│  ├─singerDetail
+│  │      singerDetail.vue      //歌手详情组件
+│  │      
+│  ├─song
+│  │      song.vue              //歌曲组件
+│  │      
+│  └─tab
+│          tab.vue              //头部导航组件
+│          
+├─router                    //路由配置
+│      index.js
+│      
+└─vuex                      //vuex配置
+        actions.js              //dispatch
+        getters.js              //计算state数据
+        index.js                //vuex入口
+        mutations-types.js      //mutations常量
+        mutations.js            //commit
+        state.js                //基础数据
+```
+
+
+### 五、主要问题及解决方式
 
 **起步**：
 
@@ -133,7 +267,7 @@ nextSong(){
 }
 ```
 ##### Q7:
-> * 由于QQ音乐请求头的限制，不能直接通过JSONP获取歌词数据，我采用后端代理来获取
+> * 由于部分数据Host字段的限制，不能直接通过JSONP获取歌词数据，开发环境下采用后端代理来获取（生产环境需要另作修改）
 
 - 1.首先，对获取歌词数据的方法做出修改
 ```js
@@ -220,4 +354,36 @@ app.use('/api', apiRoutes)
 </div>
 ```
 **The key problem was that i used v-if and v-else ,by the first time i entered the character, the `<div class="search-result"></div>` just created but it coundn't pass the props to `result component` unless entering the next time.**
+
+##### Q9:
+**歌手列表页左右联动效果：**
+
+1、Init an object :`this.touch={}`,to record the touch details of right nav，when touchstart event happens,the place （e.touches[0].pageX）and data-index（索引，预先设置data-index） of touchstart should be recorded in this object
+
+2、Doing the same things when touchmove event happens(通过移动的距离来计算索引，实现滚动到相应位置)
+
+3、When scrolling the pages on left, we should watch the change of scrollY(在滚动页面时监听scrollY的变化，通过这一变化可以计算当前的currentIndex，再根据这个值来实现右侧导航的高亮)
+
+##### Q10：
+在开发歌曲列表基础组件时，下方的滚动区域无法正确设置top值从而覆盖图片，由于图片高度是随窗口大小而改变的，因此高度需要通过计算而来。而且由于图片加载需要时间，需要对上方图片区域预设一个高度，即:
+```css
+height: 0;
+padding-top: 70%;
+```
+### 六、收获
+尽管只是一个小的demo，但是我希望从中学到的不仅仅是如何制作这样一个播放器，更希望能够举一反三，把学到的知识运用到其它项目中，因此有必要对这一过程的学习进行总结
+
+- 1.动手写代码之前先考虑好项目的组成，将其分成一个一个的小块，在这些小块当中，把相同的块抽象出来，做成公用的组件达到复用的目的
+- 2.事先把数据接口全部分析一遍、找到其中的关联性，防止日后做无用功
+- 3.养成良好的项目结构布局，一般来讲项目结构里面应该包含：基础组件、业务组件和函数工具库（个人积累的最好）
+- 4.前端框架为我们提供了便捷地模块化开发，但无论是否使用框架，都要有模块化、组件化的思想
+- 4.养成良好的代码习惯
+- 5.对VUEX的理解：
+
+WHAT：它是什么？
+> vuex是vue提供的状态管理解决方案，能够对数据的改变进行跟踪
+WHY: 为什么要用它？
+> 当数据的传递变得复杂，单纯通过组件间的数据传递很难跟踪数据变化，维护起来也是噩梦
+WHEN: 什么时候用它？
+> 个人认为简单的父子通信通过props和自定义事件就可以做到，但是当通信组件之间并非简单的父子关系，数据流开始变得复杂，就需要派它上场了
 

@@ -35,7 +35,7 @@ export default {
 		}
 	},
 	mounted(){
-		setTimeout(() => {
+		setTimeout(() => {  //在dom渲染完成后初始化better-scroll
 			this._setSliderWidth()
 			this._initDots()
 			this._initSlider()
@@ -60,7 +60,6 @@ export default {
 		computedHeight(){
 			this.sliderHeight = this.$refs.slider.clientHeight
 			this.$emit( 'sliderHeight',  this.sliderHeight)
-			// console.log(this.sliderHeight)
 		},
 		_setSliderWidth(onResize){  //初始化slider前计算并设置宽度
 			this.children = this.$refs.sliderGroup.children  // 获取子元素

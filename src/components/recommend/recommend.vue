@@ -1,8 +1,8 @@
 <template>
 <div class="recommend" ref="recommend">
-   <div class="fixed-wrapper" ref="fixedWrapper">
+   <div class="fixed-wrapper" ref="fixedWrapper"  v-show="pullupSH()">
     <i class="icon-huo"></i>
-    <h1 class="fixed-title" ref="fixedTitle" v-show="pullupSH">热门歌单</h1>
+    <h1 class="fixed-title" ref="fixedTitle">热门歌单</h1>
    </div>
    <scroll ref="scroll" class="recommend-content" 
       :data="songsList" 
@@ -33,7 +33,7 @@
      		<ul>
           <li v-for="item in songsList" class="item" @click="chooseItem(item)" ref="listGroup">
             <div class="icon">
-              <img width="60" v-lazy="item.imgurl">
+              <img class="needsclick" width="60" v-lazy="item.imgurl">
             </div>
             <div class="text">
               <h2 class="name" v-html="item.dissname"></h2>
@@ -130,8 +130,9 @@ export default {
       this.$refs.updateTip.style.display = block
     },
     pullupSH(){
-       if( this.scrollY <= - this.sliderHeight && this.$route === '/recommend' ) {
-          return ture
+
+       if( this.scrollY <= - this.sliderHeight && this.$route.fullPath === '/recommend') {
+          return true
         }else{
           return false
         }

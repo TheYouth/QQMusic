@@ -8,12 +8,12 @@ export default function getSingerList(){
 	const data = Object.assign( {}, commonParams, {
 		channel: 'singer',
 		page: 'list',
-		key: 'all_all_all',
+		key: 'eu_team_all',
 		pagesize: 100,
 		pagenum: 1,
 		loginUin: 0,
 		hostUin: 0,
-		g_tk: 5381,
+		g_tk: 450152082,
 		platform: 'yqq',
 		needNewCode: 0,
 		format: 'jsonp'

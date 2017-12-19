@@ -9,7 +9,6 @@
   		ref="scroll"
   		>
   		<ul>
-
 		  <li v-for="group,index in singerList" class="list-group" ref="listGroup">
 		  	<i class="icon-huo" v-if="showHot && index===0"></i>
 		    <h2 class="list-group-title">{{group.tag}}</h2>
@@ -22,7 +21,18 @@
 		    </ul>
 		  </li>
 		</ul>
-
+		<!-- 右侧快速入口 -->
+		<div class="list-shortcut" @touchstart.stop.prevent="onTouchStart" @touchmove.stop.prevent="onTouchMove" @touchend="onTouchend"
+         >
+         	<span class="shortcutDot" ref="shortcutDot"></span>
+         	<div class="shortcutLight" ref="shortcutLight">{{fixedTitle}}</div>
+	        <ul>
+	          <li v-for="(item, index) in shortcutList" :data-index="index" class="item"
+	            :class="{'current':currentIndex===index}">{{item}}
+	          </li>
+	          
+	        </ul>
+        </div>
 		<div class="list-fixed" v-show="fixedTitle" ref="fixedTitle">
 			<i class="icon-huo" v-if="showHot"></i>
 			<h1 class="fixed-title">{{fixedTitle}}</h1>
@@ -37,18 +47,21 @@
 </template>
 
 <script>
-//import Singer from '@/common/js/singer'
 import {createSinger} from '@/common/js/singer'
 import Scroll from '@/baseComponents/scroll/scroll'
 import getSingerList from '@/api/singerList'
 import Loading from '@/baseComponents/loading/loading'
 import {ERR_OK} from '@/api/config'
+import {getAttr} from '@/common/js/dom'
 import {mapMutations} from 'vuex'
 import {adaptBottomMixin} from '@/common/js/mixins'
 const HOT_NAME = '热门'
 const HOT_SINGER_NUM = 10
 const FIXED_HEIGHT = 30
 const TITLE_HEIGHT = 40
+const ANCHOR_HEIGHT = 18
+const color_theme_d = "rgb(230,230,230)"
+const color_sub_theme = "#F5CD19"
 export default {
 	mixins: [adaptBottomMixin],
 	data(){
@@ -59,30 +72,36 @@ export default {
 			currentIndex: 0,
 			listHeight: [],
 			probeType: 3,
-			gap: -1
+			gap: -1,
+			touch: {}
 		}
 	},
 	computed: {
+		shortcutList() {
+	        return this.singerList.map((group) => {
+	          return group.tag.substr(0, 1)
+	        })
+        },
 		fixedTitle() {
 			if( this.scrollY > 0 ){
 				return ''
 			} 
-			return this.singerList[this.currentIndex] ? this.singerList[this.currentIndex].tag : HOT_NAME
+			return this.singerList[this.currentIndex] ? this.singerList[this.currentIndex].tag : ''
 		},
 		showHot(){
 			return this.scrollY > 0 || this.fixedTitle === HOT_NAME
 		}	
 	},
 	created(){
-		setTimeout(()=>{
-			this._getSingerList()
-		},500)
+		// this.touch = {}
+		this._getSingerList()		
 	},
 	methods: {
 		_getSingerList(){
 			getSingerList().then( (res) => {
 				if( res.code === ERR_OK ){
 					this.singerList = this._sortSingerList(res.data.list)
+					console.log(this.singerList)
 				}
 			} ).catch( (err) => {
 				console.log(err)
@@ -132,6 +151,39 @@ export default {
 			})
 			return hot.concat(oth)
 		},
+		onTouchStart(e) {
+	        let anchorIndex = getAttr(e.target, 'index')
+	        this.touch.y1 = e.touches[0].pageY
+	        this.touch.anchorIndex = parseInt( anchorIndex )
+
+	        this._scrollTo(anchorIndex)
+	        
+	        this.$refs.shortcutDot.style.background = color_sub_theme
+	        this.$refs.shortcutLight.style.display = 'block'
+        },
+	    onTouchMove(e) {
+	      this.touch.y2 = e.touches[0].pageY
+	      let delta = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0
+	      let anchorIndex = parseInt(this.touch.anchorIndex) + delta  //通过getAttr（）获取的属性值为字符串
+
+	      this._scrollTo(anchorIndex)
+	    },
+	    onTouchend() {
+	    	this.$refs.shortcutDot.style.background = color_theme_d
+	    	this.$refs.shortcutLight.style.display = 'none'
+	    },
+      _scrollTo(index) {
+        if (!index && index !== 0) {
+          return
+        }
+        if (index < 0) {
+          index = 0
+        } else if (index > this.listHeight.length - 2) {
+          index = this.listHeight.length - 2
+        }
+        this.scrollY = -this.listHeight[index]
+        this.$refs.scroll._scrollToElement(this.$refs.listGroup[index], 0)
+      },
 		// scroll组件触发scroll事件
 		_scroll(pos){
 			this.scrollY = pos.y
@@ -146,7 +198,6 @@ export default {
 				height += list.clientHeight
 				this.listHeight.push(height)
 			}
-			//console.log(this.listHeight)
 		},
 		// 点击歌手跳转至歌手详情页
 		selectSinger(item,index){
@@ -167,7 +218,7 @@ export default {
 
 	},
 	watch: {
-		singerList() {
+		singerList() {  //数据的变化到DOM的变化有延迟
 			setTimeout(() => {
                this._caculateHeight()
 			}, 20);
@@ -175,12 +226,16 @@ export default {
 		scrollY(val, oldVal) {
 
 			const _heights = this.listHeight
-
+			 // 当滚动到顶部
+	        if (val > 0) {
+	          this.currentIndex = 0
+	          return
+	        }
 			// 正常在中间滚动时
-			for( let i = 0; i < _heights.length; i ++ ){
+			for( let i = 0; i < _heights.length - 1; i ++ ){
 				let preHeight = _heights[i],
 				    nextHeight = _heights[i + 1]
-				if( -val > preHeight && -val < nextHeight ){ //向上滚动时val为负
+				if( -val >= preHeight && -val < nextHeight ){ //向上滚动时val为负
 					this.currentIndex = i
 					//console.log(this.currentIndex)
 					this.gap = nextHeight + val  //为gap赋值
@@ -188,6 +243,8 @@ export default {
 					return
 				}
 			}
+			// 当滚动到底部，且-val大于最后一个元素的上限
+	        this.currentIndex = _heights.length - 2
 		},
 		gap(val, oldVal) {
 			let fixedTop = ( val > 0 && val < FIXED_HEIGHT ) ? val - FIXED_HEIGHT : 0
@@ -240,6 +297,42 @@ export default {
           margin-left: 20px
           color: $color-text-l
           font-size: $font-size-medium
+    .list-shortcut
+      position: absolute
+      z-index: 30
+      right: 0
+      top: 50%
+      transform: translateY(-50%)
+      width: 20px
+      padding: 10px 0 20px
+      border-radius: 10px
+      text-align: center
+      background: $color-background-d
+      font-family: Helvetica
+      .shortcutDot
+        display: inline-block
+        width: 12px
+        height: 12px
+        border-radius: 50%
+        background: $color-background
+      .shortcutLight
+        position: absolute
+        right: 30px
+        top: 0
+        background: $color-theme-d
+        width: 60px
+        height: 60px
+        border-radius: 50%
+        text-align: center
+        line-height: 60px
+        display: none
+      .item
+        padding: 3px
+        line-height: 1
+        color: $color-text-l
+        font-size: $font-size-small
+        &.current
+          color: $color-theme
     .list-fixed
       position: absolute
       top: 0

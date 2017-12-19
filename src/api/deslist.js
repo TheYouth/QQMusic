@@ -11,7 +11,6 @@ export default function getDesList(){
 		g_tk:5381,
 		loginUin:0,
 		hostUin:0,
-		format:'jsonp',
 		platform:'yqq',
 		needNewCode:0,
 		categoryId:99,

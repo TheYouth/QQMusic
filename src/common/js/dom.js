@@ -10,4 +10,12 @@ export function hasClass( el, className ){
 	let reg = new RegExp( '(^|\\s)' + className + '(\\s|$)' )
 	return reg.test(el.className)
 }
+// 有val则设置从属性，没有则获取
+export function getAttr(el, name, val) {
+  const prefix = 'data-'
+  if (val) {
+    return el.setAttribute(prefix + name, val)
+  }
+  return el.getAttribute(prefix + name)
+}
 
