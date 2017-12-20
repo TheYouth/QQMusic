@@ -75,14 +75,16 @@ import {mapMutations} from 'vuex'
   @import "../../common/stylus/variable"
   @import "../../common/stylus/mixin"
 
-  .rank
-    position: fixed
-    width: 100%
-    top: 88px
-    bottom: 0
-    .toplist
-      height: 100%
-      overflow: hidden
+.rank
+  position: fixed
+  width: 100%
+  top: 88px
+  bottom: 0
+  .toplist
+    height: 100%
+    overflow: hidden
+    ul
+      padding-bottom: 40px
       .item
         display: flex
         margin: 20px 20px 0 20px
@@ -90,7 +92,7 @@ import {mapMutations} from 'vuex'
         border-radius: 10px
         overflow: hidden
         &:last-child
-          padding-bottom: 40px
+          //margin-bottom: 40px
         .icon
           flex: 0 0 100px
           width: 100px

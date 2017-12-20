@@ -77,6 +77,7 @@ export default {
           if( this.result[0].singerid ){ //防止每次加载搜索列表中出现多个重复歌手
             this.result = this.result.concat( this._sortResult( res.data ).slice(1) )
           }
+          this.result = this.result.concat( this._sortResult( res.data ) )
           this.check_loadMore( res.data.song )  //搜索完一组数据后计算并更新this.loadMore
         }      
       })
@@ -170,7 +171,7 @@ export default {
 .wrapper
   position: fixed
   width: 100%
-  top: 166px
+  top: 160px
   bottom: 0
   .result
     height: 100%

@@ -33,13 +33,20 @@ export default {
       default: false
     },
     pullUpLoad: {
-      type: Boolean,
+      type: null,
       default: false
     },
     beforeScrollStart: {
-      type: Boolean,
+      type: null,
       default: false
     }
+  },
+  data() {
+    return {
+      beforePullDown: true,
+      isPullingDown: false,
+      isRebounding: false
+    }    
   },
   watch: {
     data(){
@@ -58,7 +65,8 @@ export default {
       if( !this.$refs.wrapper ) { return }  //从子路由刷新返回此页面时BScroll初始化时DOM还未渲染完成，BScroll会报错
       this.scroll = new BScroll( this.$refs.wrapper, {
         probeType: this.probeType,
-        click: this.click
+        click: this.click,
+        pullDownRefresh: this.pullDownRefresh
       } )
       // 如果需要监听滚动事件
       if( this.listenScroll ){
@@ -70,21 +78,15 @@ export default {
        // 是否派发滚动到底部事件，用于上拉加载
         if (this.pullUpLoad) {
           this.scroll.on('scrollEnd', () => {
-            let _this = this
-            if (_this.scroll.y <= (_this.scroll.maxScrollY + 50)) {
-              _this.$emit('pullUpLoad')
+            if (this.scroll.y <= (this.scroll.maxScrollY + 50)) {
+              this.$emit('pullUpLoad')
             }
           })
         }
 
         // 是否派发顶部下拉事件，用于下拉刷新
         if (this.pullDownRefresh) {
-          let _this = this
-          this.scroll.on('touchend', (pos) => {
-            if (pos.y > 50) {
-              _this.$emit('pullDownRefresh')
-            }
-          })
+           //this._initPullDownRefresh()
         }
         // 滚动收起键盘
         if( this.beforeScrollStart ) {

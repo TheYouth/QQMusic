@@ -7,10 +7,10 @@
    <scroll ref="scroll" class="recommend-content" 
       :data="songsList" 
       :listen-scroll="listenScroll" 
-      :pullDownRefresh="pullDownRefresh"
+      
       :probe-type="probeType" 
       @scroll="_scroll"
-      @pullDownRefresh="_pullDownRefresh"
+     
       >
 
     <div class="wrapper">
@@ -64,6 +64,8 @@ import Scroll from '@/baseComponents/scroll/scroll'
 import Loading from '@/baseComponents/loading/loading'
 import {adaptBottomMixin} from '@/common/js/mixins'
 import {mapMutations} from 'vuex'
+const NO_DATA = "暂无数据，稍后再试吧"
+const NEW_DATA = "刷新成功"
 export default {	
   mixins: [adaptBottomMixin],
   data(){
@@ -71,11 +73,13 @@ export default {
       recommends: [],
       songsList: [],
       pullDownRefresh: true,
+      pullDownRefreshThreshold: 90,
+      pullDownRefreshStop: 40,
       listenScroll: true,
       probeType: 3,
       scrollY: -1,   
       loadingTitle: '下拉刷新',
-      updateTip: '暂无数据，稍后再试吧',
+      updateTip: "暂无数据，稍后再试吧",
       sliderHeight: 0
     }
   },
@@ -83,11 +87,20 @@ export default {
 		this._getRecommend()
     this._getDesList()
 	},
+  // computed: {
+  //   pullDownRefreshObj() {
+  //       return this.pullDownRefresh ? {
+  //         threshold: parseInt(this.pullDownRefreshThreshold),
+  //         stop: parseInt(this.pullDownRefreshStop)
+  //       } : false
+  //   }
+  // },
 	methods: {
 		_getRecommend(){
 			getRecommend().then( (res) => {
 				if(res.code === ERR_OK){
 					this.recommends = res.data.slider
+          console.log(this.recommends)
 				}
 			} ).catch((err) => {
 				console.log(err)
@@ -114,29 +127,29 @@ export default {
     _scroll(pos){
       this.scrollY = pos.y
     },
-    _pullDownRefresh(){
-      console.log(1)
-      getRecommend().then((res) => {
-        if(res.code === ERR_OK){
-          this.recommends = res.data.slider.concat( this.recommends )
-        }
-      })
-      getDesList().then((res) => {
-        if(res.code === ERR_OK){
-          this.songsList = res.data.list.concat( this.songsList )
-        }
-      })
-      console.log(1)
-      this.$refs.updateTip.style.display = block
-    },
+    // _pullDownRefresh(){
+    //   getDesList().then((res) => {
+    //     if(res.code === ERR_OK){
+    //       if( this.songsList === res.data.list ) { return }
+    //       this.songsList = this.songsList.concat( res.data.list )
+    //     }
+    //   })
+    //   //this.updateData()
+    // },
     pullupSH(){
-
        if( this.scrollY <= - this.sliderHeight && this.$route.fullPath === '/recommend') {
           return true
         }else{
           return false
         }
     },
+    // updateData(){
+    //   const updateTip = this.$refs.updateTip
+    //   updateTip.style.display = "block"
+    //   setTimeout(() => {
+    //     updateTip.style.display = "none"
+    //   }, 1000);
+    // },
     _sliderHeight(h){
       this.sliderHeight = h
     },
@@ -145,24 +158,22 @@ export default {
         const bottom = this.playList.length > 0 ? '40px' : ''
         this.$refs.recommend.style.bottom = bottom
         this.$refs.scroll._refresh()
-    }
+    },
 	},
   watch: {
       scrollY(val,oldVal){
           if( val <= - this.sliderHeight ){
-            this.$refs.fixedWrapper.style.display = `block`
-            this.$refs.fixedWrapper.style.backgroundColor = `#f0f0f0`
-            
+            this.$refs.fixedWrapper.style.display = `block`        
           }else{
             this.$refs.fixedWrapper.style.display = `none`
           }
           if( val > 80 ) {
             this.loadingTitle = "释放刷新"
           }else {
-            this.loadingTitle = ""
+            this.loadingTitle = "下拉刷新"
           }
        }
-    } ,
+    },
 	components: {
 		Slider,
     Scroll,
@@ -182,7 +193,7 @@ export default {
     bottom: 0
     .fixed-wrapper
       position: fixed
-      top: 88px
+      top: 86px
       left: 0
       width: 100%
       padding-left: 20px
@@ -192,7 +203,6 @@ export default {
       z-index: 999
       text-align: center
       display: none
-      box-shadow: 0 2px 5px 0 rgb(200,200,200)
       transition: all 2s
       .icon-huo
         float:left

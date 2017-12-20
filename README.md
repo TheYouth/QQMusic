@@ -8,9 +8,9 @@
   <a href="https://github.com/vuejs/vuex"><img src="https://img.shields.io/badge/vuex-v3.0.1-green.svg" alt="vuex"></a>
   <a href="https://github.com/hilongjw/vue-lazyload"><img src="https://img.shields.io/badge/vue--lazyload-v1.1.4-green.svg" alt="vue-lazyload"></a> 
   <a href="https://github.com/axios/axios"><img src="https://img.shields.io/badge/axios-v0.17.1-yellow.svg" alt="axios"></a>
-  <a href="https://github.com/ustbhuangyi/better-scroll"><img src="https://img.shields.io/badge/better--scroll-^1.5.5-yellow.svg" alt="better-scroll"></a>
-  <a href="https://github.com/ftlabs/fastclick"><img src="https://img.shields.io/badge/fastclick-^1.0.6-yellow.svg" alt="fastclick"></a>
-  <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-^0.54.5-yellow.svg" alt="stylus"></a>
+  <a href="https://github.com/ustbhuangyi/better-scroll"><img src="https://img.shields.io/badge/better--scroll-v1.5.5-yellow.svg" alt="better-scroll"></a>
+  <a href="https://github.com/ftlabs/fastclick"><img src="https://img.shields.io/badge/fastclick-v1.0.6-yellow.svg" alt="fastclick"></a>
+  <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-v0.54.5-yellow.svg" alt="stylus"></a>
 </p>
 
 ### 一、播放器基本功能
@@ -20,9 +20,9 @@
 - [x] 上拉加载
 
 ### 二、概述
-- 上面图片可以看出，有许多页面采用了复用的组件，比如推荐歌单页（图2）、歌手详情页（图4）、排行榜详情页（图8），同时在这些组件中还有更加细分的基础组件。这样可以高度定制化组件，满足不同的需求，提高开发效率。
+- 下面图片可以看出，有许多页面采用了复用的组件，比如推荐歌单页（图2）、歌手详情页（图4）、排行榜详情页（图8），同时在这些组件中还有更加细分的基础组件。这样可以高度定制化组件，满足不同的需求，提高开发效率。
 - 核心是利用vuex做数据的传递，方便跟踪状态
-- 这个demo依然有许多隐藏的bug，还有许多功能待完善，我也会一直更新完善这个demo。
+- 这个demo依然有许多隐藏的bug，还有许多功能待完善，抱着学习的态度我会一直更新完善它。
 
 ### 三、图片预览
 ##### 1.首页
@@ -331,6 +331,7 @@ app.use('/api', apiRoutes)
         })
       } )
 ```
+
 ##### Q8:
 > * During developing the search component, i met a trouble that: it can't send request when i enter the character in input first time Whether the character is a letter or a singer word. And then i found it was caused by the props:
 ```html
@@ -373,13 +374,13 @@ padding-top: 70%;
 ### 六、收获
 尽管只是一个小的demo，但是我希望从中学到的不仅仅是如何制作这样一个播放器，更希望能够举一反三，把学到的知识运用到其它项目中，因此有必要对这一过程的学习进行总结
 
-- 1.动手写代码之前先考虑好项目的组成，将其分成一个一个的小块，在这些小块当中，把相同的块抽象出来，做成公用的组件达到复用的目的
+- 1.动手写代码之前先考虑好项目的组成，将其分成一个个块，在这些块当中，把功能类似的块抽象出来，做成公用的组件达到复用的目的
 - 2.事先把数据接口全部分析一遍、找到其中的关联性，防止日后做无用功
 - 3.养成良好的项目结构布局，一般来讲项目结构里面应该包含：基础组件、业务组件和函数工具库（个人积累的最好）
-- 4.前端框架为我们提供了便捷地模块化开发，但无论是否使用框架，都要有模块化、组件化的思想
-- 4.养成良好的代码习惯
-- 5.边界条件的判断十分重要
-- 5.对VUEX的理解：
+- 4.前端框架为我们提供了便捷地模块化开发，但无论是否使用框架，都要有模块化、组件化的开发思想
+- 5.养成良好的代码习惯
+- 6.边界条件的判断十分重要
+- 7.对VUEX的理解：
 
 WHAT：它是什么？
 > vuex是vue提供的状态管理解决方案，能够对数据的改变进行跟踪

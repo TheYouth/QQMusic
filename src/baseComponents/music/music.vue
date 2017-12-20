@@ -81,6 +81,7 @@ import {mapGetters} from 'vuex'
         transform: scaleY(0.2)
         width: 100%
         top: 100%
+        left: 0
       .currentIcon
         position: absolute
         right: 2px
@@ -98,5 +99,5 @@ import {mapGetters} from 'vuex'
           no-wrap()
           margin-top: 4px
           color: $color-text-d
-          width: 300px
+          width: 240px
 </style>

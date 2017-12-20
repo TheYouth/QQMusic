@@ -16,7 +16,6 @@
 		      <li @click="selectSinger(item,index)" v-for="(item,index) in group.items" class="list-group-item">
 		        <img class="pic" v-lazy="item.pic">
 		        <span class="name">{{item.name}}</span>
-		        <span class="arrow"></span>
 		      </li>
 		    </ul>
 		  </li>
@@ -260,7 +259,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import "../../common/stylus/variable"
-
+@import "../../common/stylus/mixin"
 .singer
   position: fixed
   top: 88px
@@ -297,6 +296,8 @@ export default {
           margin-left: 20px
           color: $color-text-l
           font-size: $font-size-medium
+          no-wrap()
+          width: 240px
     .list-shortcut
       position: absolute
       z-index: 30
