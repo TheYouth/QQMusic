@@ -1,22 +1,20 @@
 <template>
 <div class="recommend" ref="recommend">
-   <div class="fixed-wrapper" ref="fixedWrapper"  v-show="pullupSH()">
+   <div class="fixed-wrapper" ref="fixedWrapper"  v-show="pullupSH">
     <i class="icon-huo"></i>
     <h1 class="fixed-title" ref="fixedTitle">热门歌单</h1>
    </div>
    <scroll ref="scroll" class="recommend-content" 
       :data="songsList" 
-      :listen-scroll="listenScroll" 
-      
+      :listen-scroll="listenScroll"      
       :probe-type="probeType" 
-      @scroll="_scroll"
-     
+      @scroll="_scroll"    
       >
 
     <div class="wrapper">
-      <div class="loading-wrapper">
+      <!-- <div class="loading-wrapper">
         <loading v-show="pullDownRefresh" :title="loadingTitle"></loading>
-      </div>      
+      </div>  -->     
      	<!-- 获取图片数据是异步的，拿到数据前slider组件已经被mounted，不能正确渲染，需要如下判断 -->
      	<div v-if="recommends.length" class="slider-wrapper">
      		<slider @sliderHeight="_sliderHeight">
@@ -137,6 +135,8 @@ export default {
     //   //this.updateData()
     // },
     pullupSH(){
+      console.log(this.sliderHeight)
+      if( !this.sliderHeight ) { return }  //修复首页滚动时fixedTitle bug
        if( this.scrollY <= - this.sliderHeight && this.$route.fullPath === '/recommend') {
           return true
         }else{

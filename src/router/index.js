@@ -37,6 +37,11 @@ const RankDetail = (resolve) => {
         resolve(module)
     } )
 }
+const Login = (resolve) => {
+    import('@/components/login/login').then( (module) => {
+        resolve(module)
+    } )
+}
 
 export default new Router({
   routes: [
@@ -83,6 +88,10 @@ export default new Router({
                 component: SingerDetail
             }
         ]
+    },
+    {
+        path: '/login',
+        component: Login
     }
   ]
 })

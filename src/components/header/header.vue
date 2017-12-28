@@ -1,6 +1,8 @@
 <template>
   <div class="m-header">
-    <i class="icon-geren"></i>
+    <router-link to='/login'>
+      <i class="icon-geren" ></i>
+    </router-link>
     <div class="icon"></div>
     <h1 class="text">Music  Player</h1>
     <i class="icon-mulu"></i>
@@ -11,7 +13,14 @@
 </template>
 
 <script type="text/javascript">
- 
+
+ export default {
+  methods: {
+    showLogin() {
+
+    }
+  }
+ }
 </script>
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
