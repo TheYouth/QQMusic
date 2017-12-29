@@ -1,6 +1,6 @@
 <template>
   <div class="m-header">
-    <router-link to='/login'>
+    <router-link :to='path'>
       <i class="icon-geren" ></i>
     </router-link>
     <div class="icon"></div>
@@ -15,11 +15,24 @@
 <script type="text/javascript">
 
  export default {
-  methods: {
-    showLogin() {
-
+    data() {
+      return {
+        isLogin: false
+      }
+    },
+    created() {
+      this.isLogin  = this.$local.get("name").login
+    },
+    watch: {
+      $route() {
+        this.isLogin  = this.$local.get("name").login
+      }
+    },
+    computed: {
+      path() {
+        return this.isLogin ? '/person' : '/login'
+      }
     }
-  }
  }
 </script>
 

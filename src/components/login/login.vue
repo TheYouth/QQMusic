@@ -6,16 +6,18 @@
         <p class="title">登录</p>
       </div>
       <div class="login-content">
+        <form @submit.prevent="submit">
         <div class="input-group">
-          <input type="text" class="input" placeholder="请输入账号" />
+          <input type="text" class="input" ref="name" placeholder="请输入账号" />
           <input type="text" class="input" placeholder="请输入密码" />
         </div>
         <div class="login-btn">
-          <input type="button" value="登录" class="btn">
+          <input type="submit" value="登录" class="btn">
         </div>
+        </form>
       </div>
     </div>
-  </transition>
+</transition>
 </template>
 
 <script type="text/javascript">
@@ -23,6 +25,16 @@
   methods: {
     back(){
       this.$router.back()
+    },
+    submit() {
+      let name = this.$refs.name.value
+      this.$local.set( "name", {
+        login: true,
+        value: name
+      } )
+      this.$router.push({
+        path: '/person'
+      })
     }
   }
  }
@@ -68,7 +80,6 @@
       height: 100px
       border-radius: 5px
       overflow: hidden
-      // background: orange
       .input
         width: 100%
         height: 50%

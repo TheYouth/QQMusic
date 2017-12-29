@@ -42,6 +42,11 @@ const Login = (resolve) => {
         resolve(module)
     } )
 }
+const Person = (resolve) => {
+    import('@/components/person/person').then( (module) => {
+        resolve(module)
+    } )
+}
 
 export default new Router({
   // mode: 'history',
@@ -60,7 +65,21 @@ export default new Router({
             {
                 path: ':id',
                 component: RecommendDetail
-            }
+            },
+            {
+                path: '/login',
+                component: Login,
+                meta: {
+                    login: true
+                }
+            },          
+            {
+                path: '/person',
+                component: Person,
+                meta: {
+                    login: true
+                }
+            },
         ]
     },
     {
@@ -102,10 +121,7 @@ export default new Router({
             }
         ]
     },
-    {
-        path: '/login',
-        component: Login
-    },
+   
     {
         path: '*',
         redirect: '/recommend'

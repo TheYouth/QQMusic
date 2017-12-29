@@ -7,6 +7,9 @@ import VueLazyload from 'vue-lazyload'
 
 import './common/stylus/index.styl'
 
+import Store from './common/js/localstorage'
+Vue.use(Store)
+
 import fastclick from 'fastclick'
 fastclick.attach(document.body) //body上的所有元素都没有300ms延迟了
 
