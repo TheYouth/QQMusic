@@ -3,6 +3,7 @@
       <div class="login-header">
         <i class="icon-fanhui" @click="back"></i>
         <p class="title">个人中心</p>
+        <span class="loginout" @click="loginOut">退出</span>
       </div>
       <div class="flex">
         <div class="img">
@@ -28,6 +29,10 @@
       this.$router.push({
         path: '/recommend'
       })
+    },
+    loginOut() {
+      this.$local.clear()
+      this.$router.go(-2)
     }    
   },
   created() {
@@ -62,7 +67,11 @@
       font-size: $font-size-large-xl
       left: 0
     .title
-      font-size: $font-size-large-xl
+      font-size: $font-size-large-x
+    .loginout
+      position: absolute
+      right: 10px
+      top: 0
   .flex
     display: flex
     padding: 16px

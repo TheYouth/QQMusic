@@ -66,20 +66,7 @@ export default new Router({
                 path: ':id',
                 component: RecommendDetail
             },
-            {
-                path: '/login',
-                component: Login,
-                meta: {
-                    login: true
-                }
-            },          
-            {
-                path: '/person',
-                component: Person,
-                meta: {
-                    login: true
-                }
-            },
+            
         ]
     },
     {
@@ -120,11 +107,18 @@ export default new Router({
                 component: SingerDetail
             }
         ]
-    },
-   
+    },   
     {
         path: '*',
         redirect: '/recommend'
-    }
+    },
+    {
+                path: '/login',
+                component: Login
+            },          
+            {
+                path: '/person',
+                component: Person
+            },
   ]
 })

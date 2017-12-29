@@ -2,11 +2,13 @@
   <div id="app">
     <d-header></d-header>
     <tab></tab>
-    <keep-alive>
+    
       <transition :name="dir">
-    	  <router-view></router-view>
+        <keep-alive>
+    	    <router-view></router-view>
+        </keep-alive>
       </transition>
-    </keep-alive>
+    
     <player></player>
   </div>
 </template>
@@ -23,15 +25,18 @@ export default {
   },
   data(){
     return {
-      dir: "left"
+      dir: ""
     }
   },
   watch: {
     $route(to, from) {
+      console.log(from.meta,to.meta)
       if(to.meta.index > from.meta.index) {
         this.dir = "left"
       }else if( to.meta.index < from.meta.index ) {
         this.dir = "right"
+      }else if(  !from.meta.index ) {
+        this.dir = ""
       }
     }
   }
@@ -52,4 +57,5 @@ export default {
   transform: translate3d(-100%, 0, 0)
 .right-leave-to
   transform: translate3d(100%, 0, 0)
+
 </style>
