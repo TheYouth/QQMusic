@@ -21,7 +21,7 @@
 		  </li>
 		</ul>
 		<!-- 右侧快速入口 -->
-		<div class="list-shortcut" @touchstart.stop.prevent="onTouchStart" @touchmove.stop.prevent="onTouchMove" @touchend="onTouchend"
+		<div class="list-shortcut" @touchstart.stop.prevent="onTouchStart" @touchmove.stop.prevent="onTouchMove" @touchend="onTouchend" v-show="singerList.length"
          >
          	<span class="shortcutDot" ref="shortcutDot"></span>
          	<div class="shortcutLight" ref="shortcutLight">{{fixedTitle}}</div>
@@ -100,7 +100,7 @@ export default {
 			getSingerList().then( (res) => {
 				if( res.code === ERR_OK ){
 					this.singerList = this._sortSingerList(res.data.list)
-					console.log(this.singerList)
+					//console.log(this.singerList)
 				}
 			} ).catch( (err) => {
 				console.log(err)

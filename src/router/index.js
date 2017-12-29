@@ -44,6 +44,7 @@ const Login = (resolve) => {
 }
 
 export default new Router({
+  // mode: 'history',
   routes: [
     {
       path: '/',
@@ -52,6 +53,9 @@ export default new Router({
     {
     	path: '/recommend',
     	component: Recommend,
+        meta: {
+            index: 0
+        },
         children: [
             {
                 path: ':id',
@@ -62,6 +66,9 @@ export default new Router({
     {
     	path: '/singer',
     	component: Singer,
+        meta: {
+            index: 1
+        },
         children: [
             {
                 path: ':id',
@@ -72,6 +79,9 @@ export default new Router({
     {
     	path: '/rank',
     	component: Rank,
+         meta: {
+            index: 2
+        },
         children: [
             {
                 path: ':id',
@@ -82,6 +92,9 @@ export default new Router({
     {
     	path: '/search',
     	component: Search,
+        meta: {
+            index: 3
+        },
         children: [
             {
                 path: ':id',
@@ -92,6 +105,10 @@ export default new Router({
     {
         path: '/login',
         component: Login
+    },
+    {
+        path: '*',
+        redirect: '/recommend'
     }
   ]
 })
