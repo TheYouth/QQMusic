@@ -85,14 +85,6 @@ export default {
 		this._getRecommend()
     this._getDesList()
 	},
-  // computed: {
-  //   pullDownRefreshObj() {
-  //       return this.pullDownRefresh ? {
-  //         threshold: parseInt(this.pullDownRefreshThreshold),
-  //         stop: parseInt(this.pullDownRefreshStop)
-  //       } : false
-  //   }
-  // },
 	methods: {
 		_getRecommend(){
 			getRecommend().then( (res) => {

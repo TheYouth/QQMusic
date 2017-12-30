@@ -30,7 +30,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(from.meta,to.meta)
       if(to.meta.index > from.meta.index) {
         this.dir = "left"
       }else if( to.meta.index < from.meta.index ) {

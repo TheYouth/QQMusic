@@ -9,8 +9,11 @@ let store = {
 	get(key) {
 		return JSON.parse(localStorage.getItem(key)) || {}
 	},
-	clear() {
-		return localStorage.clear()
+	removeItem(key) {
+		return localStorage.removeItem(key)
+	},
+	valueOf() {
+		return localStorage.valueOf()
 	}
 }
 let localstorage = {

@@ -21,3 +21,29 @@ extend-click()
     left: -10px
     right: -10px
     bottom: -10px
+
+// 0.5像素边框
+thick-line-top()
+  position: relative
+  &:before
+    content: ''
+    display: inline-block
+    position: absolute
+    left: 0
+    top: 0
+    width: 100%
+    height: 1px
+    transform: scaleY(0.3)
+    background: $color-text-d
+thick-line-bottom()
+  position: relative
+  &:after
+    content: ''
+    display: inline-block
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 100%
+    height: 1px
+    transform: scaleY(0.3)
+    background: $color-text-d

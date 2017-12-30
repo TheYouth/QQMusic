@@ -8,14 +8,16 @@
       <div class="login-content">
         <form @submit.prevent="submit">
         <div class="input-group">
-          <input type="text" class="input" ref="name" placeholder="请输入账号" />
-          <input type="text" class="input" placeholder="请输入密码" />
+          <input type="text" class="input" ref="name" placeholder="请输入账号：海绵宝宝" />
+          <input type="text" class="input" ref="keyword" placeholder="请输入密码：123456" />
         </div>
         <div class="login-btn">
           <input type="submit" value="登录" class="btn">
         </div>
         </form>
+        <div class="missName" ref="missName">用户名或密码错误！</div>
       </div>
+      
     </div>
 </transition>
 </template>
@@ -28,14 +30,25 @@
     },
     submit() {
       let name = this.$refs.name.value
-      this.$local.set( "name", {
-        login: true,
-        value: name
-      } )
-      this.$router.push({
-        path: '/person'
-      })
-    }
+      let keyword = this.$refs.keyword.value
+      if( name === "海绵宝宝" & keyword === "123456" ) {
+        this.$local.set( "name", {
+          login: true,
+          value: name
+        } )
+        this.$router.push({
+          path: '/person'
+        })
+      }else {
+        this.missName()
+      }
+    },
+    missName() {
+      this.$refs.missName.style.display = "block"
+      setTimeout(() => {
+        this.$refs.missName.style.display = "none"
+      }, 1000);
+    },
   }
  }
 </script>
@@ -75,6 +88,7 @@
     height: 100%
     padding: 20px 
     margin-top: 50px 
+    position: relative
     .input-group
       width: 100% 
       height: 100px
@@ -96,5 +110,17 @@
         height: 100%
         background: $color-theme
         color: $color-background
+    .missName
+      width: 90%
+      height: 50px
+      text-align: center
+      line-height: 50px
+      background: $color-sup-theme
+      border-radius: 5px
+      position:absolute
+      top: -40px
+      left: 50%
+      transform: translateX(-50%)
+      display: none
 
 </style>

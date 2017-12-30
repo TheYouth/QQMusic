@@ -87,7 +87,7 @@
           <i class="icon-mini" @click.stop="togglePlay" :class="miniToggleIcon"></i>
         </div>       
         <div class="control">
-          <i class="icon-xihuan"></i>
+          <i :class="iconToggleLove" @click.stop="toggleLove"></i>
         </div>
       </div>
     </transition>
@@ -124,7 +124,8 @@ const STAY_LINE = 6
         currentLyric: null,
         currentLineNum: 0,
         currentDot: 'cd',
-        playingLyricTXT: ''
+        playingLyricTXT: '',
+        iconToggleLove: "icon-xihuan"
       }
     },
    computed: {
@@ -180,6 +181,34 @@ const STAY_LINE = 6
       this.setPlayingState(!this.playing)
       this.currentLyric && this.currentLyric.togglePlay()  //lyricBug：修复歌曲暂停是歌词继续滚动BUG
     },
+    toggleLove() {  
+      if( this.iconToggleLove === "icon-xihuan" ) {      //喜欢 
+        if( this.$local.get("name").login ) {
+          this.iconToggleLove = "icon-loveList"
+          this.$local.set("song"+this.currentSong.id, this.currentSong )
+          this._setLovelists()
+        }else {
+          this.$router.push({
+            path: '/login'
+          })
+        }
+      }else if ( this.iconToggleLove === "icon-loveList" ) {  //取消喜欢
+        this.iconToggleLove = "icon-xihuan"
+        this.$local.removeItem("song"+this.currentSong.id )
+        this._setLovelists()
+      }
+    },
+    _setLovelists() {  //设置收藏列表
+       let obj = this.$local.valueOf()
+        let loveLists = []
+        for( let key in obj ) {
+          let reg = /^song\d+/
+          if(key.match(reg)){
+            loveLists.push(JSON.parse(obj[key]))
+          }
+        }
+        this.setLoveList(loveLists)
+    },
     prevSong(){
       if( !this.canBePlayed ) { return }
        if( this.playList.length === 1 ){ 
@@ -214,7 +243,8 @@ const STAY_LINE = 6
       setPlayingState: 'SET_PLAYING_STATE',
       setCurrentIndex: 'SET_CURRENT_INDEX',
       setPlayMode: 'SET_PLAY_MODE',
-      setPlayList: 'SET_PLAYLIST'
+      setPlayList: 'SET_PLAYLIST',
+      setLoveList: 'SET_LOVE_LIST'
     }),
     // 当前歌曲播放事件进度
     _currentTime(e){
@@ -279,7 +309,6 @@ const STAY_LINE = 6
       this.currentSong.getLyric().then((lyric) => {
         if( this.currentSong.lyric !== lyric ){ return } //lyricBug:修复快速切歌歌词错乱
         this.currentLyric = new Lyric(lyric, this.lyricCallback)  //创建歌词实例
-        console.log(this.currentLyric) 
         if( this.playing ) {
           this.currentLyric.play()
         } 
@@ -362,6 +391,13 @@ const STAY_LINE = 6
         this.setPlayingState(true)
         this._getLyric() //歌词
       })
+
+      if( this.$local.get("song"+newSong.id).id === newSong.id ) {
+        this.iconToggleLove = "icon-loveList"
+      }else {
+        this.iconToggleLove = "icon-xihuan"
+      }
+      
     },
     playing(val, oldVal){ 
       const audio = this.$refs.audio
@@ -615,7 +651,7 @@ const STAY_LINE = 6
       .control
         flex: 0 0 30px
         padding: 0 10px
-        .icon-play, .icon-pause, .icon-xihuan
+        .icon-play, .icon-pause, .icon-xihuan, .icon-loveList
           display: inline-block
           font-size: 32px
           width:32px
@@ -624,6 +660,9 @@ const STAY_LINE = 6
           z-index:-10
         .icon-xihuan
           color: $color-theme
+          margin-bottom: 6px
+        .icon-loveList
+          color: red
           margin-bottom: 6px
         .icon-mini
           font-size: 32px

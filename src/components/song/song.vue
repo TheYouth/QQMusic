@@ -159,7 +159,7 @@ const TITLE_NEXT_SIZE = 18
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
 @import "../../common/stylus/variable"
-
+@import "../../common/stylus/mixin"
   .music-list
     position: fixed
     z-index: 100

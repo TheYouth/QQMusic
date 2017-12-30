@@ -30,6 +30,9 @@ const mutations = {
 	},
 	[types.SET_SEARCH_HISTORY](state, histroy) {  //搜索列表
 	  state.searchHistroy = histroy
+	},
+	[types.SET_LOVE_LIST](state, love) {  //收藏列表
+	  state.loveList = love
 	}
 }
 
