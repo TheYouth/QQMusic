@@ -5,10 +5,6 @@
     </router-link>
     <div class="icon"></div>
     <h1 class="text">Music  Player</h1>
-    <i class="icon-mulu"></i>
-<!--     <router-link tag="div" class="mine" to="/user">
-      <i class="icon-mine"></i>
-    </router-link> -->
   </div>
 </template>
 

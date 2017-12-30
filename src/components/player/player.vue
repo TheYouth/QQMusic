@@ -306,6 +306,15 @@ const STAY_LINE = 6
     },
     // 歌词
     _getLyric(){
+
+      if( this.currentSong.lyric ) {  //修复收藏歌单播放时歌词错误
+        this.currentLyric = new Lyric(this.currentSong.lyric, this.lyricCallback)
+        if( this.playing ) {
+          this.currentLyric.play()
+        } 
+        return
+      }
+        
       this.currentSong.getLyric().then((lyric) => {
         if( this.currentSong.lyric !== lyric ){ return } //lyricBug:修复快速切歌歌词错乱
         this.currentLyric = new Lyric(lyric, this.lyricCallback)  //创建歌词实例
@@ -427,7 +436,7 @@ const STAY_LINE = 6
         top: 0
         width: 180%
         z-index: -1
-        opacity: 0.7
+        opacity: 0.3
         filter: blur(15px)
       .top
         position: relative
