@@ -1,9 +1,9 @@
 <template>
 <div class="recommend" ref="recommend">
-   <div class="fixed-wrapper" ref="fixedWrapper"  v-show="pullupSH">
+   <!-- <div class="fixed-wrapper" ref="fixedWrapper"  v-show="pullupSH">
     <i class="icon-huo"></i>
     <h1 class="fixed-title" ref="fixedTitle">热门歌单</h1>
-   </div>
+   </div> -->
    <scroll ref="scroll" class="recommend-content" 
       :data="songsList" 
       :listen-scroll="listenScroll"      
@@ -84,6 +84,7 @@ export default {
 	created(){
 		this._getRecommend()
     this._getDesList()
+    console.log(this.$route)
 	},
 	methods: {
 		_getRecommend(){
@@ -117,31 +118,14 @@ export default {
     _scroll(pos){
       this.scrollY = pos.y
     },
-    // _pullDownRefresh(){
-    //   getDesList().then((res) => {
-    //     if(res.code === ERR_OK){
-    //       if( this.songsList === res.data.list ) { return }
-    //       this.songsList = this.songsList.concat( res.data.list )
-    //     }
-    //   })
-    //   //this.updateData()
-    // },
     pullupSH(){
-      console.log(this.sliderHeight)
-      if( !this.sliderHeight ) { return }  //修复首页滚动时fixedTitle bug
+      // if( !this.sliderHeight ) { return }  //修复首页滚动时fixedTitle bug
        if( this.scrollY <= - this.sliderHeight && this.$route.fullPath === '/recommend') {
           return true
         }else{
           return false
         }
     },
-    // updateData(){
-    //   const updateTip = this.$refs.updateTip
-    //   updateTip.style.display = "block"
-    //   setTimeout(() => {
-    //     updateTip.style.display = "none"
-    //   }, 1000);
-    // },
     _sliderHeight(h){
       this.sliderHeight = h
     },
@@ -154,11 +138,11 @@ export default {
 	},
   watch: {
       scrollY(val,oldVal){
-          if( val <= - this.sliderHeight ){
-            this.$refs.fixedWrapper.style.display = `block`        
-          }else{
-            this.$refs.fixedWrapper.style.display = `none`
-          }
+          // if( val <= - this.sliderHeight ){
+          //   this.$refs.fixedWrapper.style.display = `block`        
+          // }else{
+          //   this.$refs.fixedWrapper.style.display = `none`
+          // }
           if( val > 80 ) {
             this.loadingTitle = "释放刷新"
           }else {

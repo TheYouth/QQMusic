@@ -5,6 +5,7 @@
     </router-link>
     <div class="icon"></div>
     <h1 class="text">Music  Player</h1>
+    <i class="icon-mulu"></i>
   </div>
 </template>
 

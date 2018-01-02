@@ -113,12 +113,12 @@ export default new Router({
         redirect: '/recommend'
     },
     {
-                path: '/login',
-                component: Login
-            },          
-            {
-                path: '/person',
-                component: Person
-            },
+        path: '/login',
+        component: Login
+    },          
+    {
+        path: '/person',
+        component: Person
+    },
   ]
 })

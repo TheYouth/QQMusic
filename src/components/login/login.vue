@@ -8,7 +8,7 @@
       <div class="login-content">
         <form @submit.prevent="submit">
         <div class="input-group">
-          <input type="text" class="input" ref="name" placeholder="请输入账号：海绵宝宝" />
+          <input type="text" class="input" ref="name" placeholder="请输入账号：章鱼" />
           <input type="text" class="input" ref="keyword" placeholder="请输入密码：123456" />
         </div>
         <div class="login-btn">
@@ -31,7 +31,7 @@
     submit() {
       let name = this.$refs.name.value
       let keyword = this.$refs.keyword.value
-      if( name === "海绵宝宝" & keyword === "123456" ) {
+      if( name === "章鱼" & keyword === "123456" ) {
         this.$local.set( "name", {
           login: true,
           value: name

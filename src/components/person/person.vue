@@ -52,7 +52,6 @@
 import {mapGetters,mapActions} from 'vuex'
 import Scroll from '@/baseComponents/scroll/scroll'
 import {adaptBottomMixin} from '@/common/js/mixins'
-import {createSong} from '@/common/js/song'
  export default {
   components: {
     Scroll
@@ -62,8 +61,7 @@ import {createSong} from '@/common/js/song'
     return {
       username: name,
       loveLists: [],
-      loveListChange: false,
-      createSongList: []
+      loveListChange: false
     }
   },
   computed: {
@@ -89,16 +87,6 @@ import {createSong} from '@/common/js/song'
           this.loveLists.push(JSON.parse(obj[key]))
         }
       }
-      this._createSong(this.loveLists)
-    },
-    _createSong(list) {
-      list.forEach((musicData) => {
-        console.log(musicData)
-        if (musicData.songid && musicData.albummid) {
-          this.createSongList.push(createSong(musicData))
-        }
-      })
-      console.log( this.createSongList)
     },
     singer(item) {
       return `${item.name}--${item.singer}`
@@ -186,8 +174,7 @@ import {createSong} from '@/common/js/song'
         color: $color-theme
         font-size: $font-size-large
       p
-        color: $color-text-d
-        
+        color: $color-text-d       
   .loveList
     padding: 20px 20px 0
     .title
