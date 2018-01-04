@@ -17,7 +17,7 @@
 
 <p align="center">手机扫一扫预览：</p>
 <a align="center">
-  ![ ](image/music.png)
+![ ](image/music.png)
 </a>
 
 ### 一、播放器基本功能
