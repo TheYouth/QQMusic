@@ -43,53 +43,53 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     
     before(app){
       // 获取推荐歌单
-      app.get( '/api/getDesList', function(req, res) {
-        const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
-        axios.get( url, {
-          headers: {
-            referer: 'https://y.qq.com/',
-            host: 'c.y.qq.com'
-          },
-          params: req.query
-        } ).then((response) => {
-          //res.json(response.data)
-           var ret = response.data
-          if (typeof ret === 'string') {
-            var reg = /^\w+\(({[^()]+})\)$/
-            var matches = ret.match(reg)
-            if (matches) {
-              ret = JSON.parse(matches[1])
-            }
-          }
-          res.json(ret)
-        } ).catch((err) => {
-          console.log(err)
-        })
-      } )
+      // app.get( '/api/getDesList', function(req, res) {
+      //   const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
+      //   axios.get( url, {
+      //     headers: {
+      //       referer: 'https://y.qq.com/',
+      //       host: 'c.y.qq.com'
+      //     },
+      //     params: req.query
+      //   } ).then((response) => {
+      //     //res.json(response.data)
+      //      var ret = response.data
+      //     if (typeof ret === 'string') {
+      //       var reg = /^\w+\(({[^()]+})\)$/
+      //       var matches = ret.match(reg)
+      //       if (matches) {
+      //         ret = JSON.parse(matches[1])
+      //       }
+      //     }
+      //     res.json(ret)
+      //   } ).catch((err) => {
+      //     console.log(err)
+      //   })
+      // } )
       // 获取推荐歌单歌曲
-      app.get( '/api/getDesDetail', function(req, res) {
-        const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
-        axios.get( url, {
-          headers: {
-            referer: 'https://y.qq.com/',
-            host: 'c.y.qq.com'
-          },
-          params: req.query
-        } ).then((response) => {
-          //res.json(response.data)
-           var ret = response.data
-          if (typeof ret === 'string') {
-            var reg = /^\w+\(({[^()]+})\)$/
-            var matches = ret.match(reg)
-            if (matches) {
-              ret = JSON.parse(matches[1])
-            }
-          }
-          res.json(ret)
-        } ).catch((err) => {
-          console.log(err)
-        })
-      } )
+      // app.get( '/api/getDesDetail', function(req, res) {
+      //   const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
+      //   axios.get( url, {
+      //     headers: {
+      //       referer: 'https://y.qq.com/',
+      //       host: 'c.y.qq.com'
+      //     },
+      //     params: req.query
+      //   } ).then((response) => {
+      //     //res.json(response.data)
+      //      var ret = response.data
+      //     if (typeof ret === 'string') {
+      //       var reg = /^\w+\(({[^()]+})\)$/
+      //       var matches = ret.match(reg)
+      //       if (matches) {
+      //         ret = JSON.parse(matches[1])
+      //       }
+      //     }
+      //     res.json(ret)
+      //   } ).catch((err) => {
+      //     console.log(err)
+      //   })
+      // } )
       //获取歌词
       app.get( '/api/getLyric', function(req, res) {
         const url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
@@ -114,8 +114,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         } ).catch((err) => {
           console.log(err)
         })
-      } )
-      
+      } )     
     }
   },
   plugins: [

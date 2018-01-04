@@ -24,25 +24,25 @@ export default {
         'recommend'
   	]), 
   	title(){
-  		return this.recommend.creator.name
+  		return this.recommend.songListAuthor
   	},
   	bgImage(){               
-        return this.recommend.imgurl       
+        return this.recommend.picUrl       
     },
   },
   created(){
-  	this._getDesDetail()
+  	// this._getDesDetail()
   	
   },
   methods: {
   	_getDesDetail(){
-  		if( !this.recommend.dissid ) {  //点击歌单时才可获取到歌单id值，刷新页面无法获得id，需要返回歌手列表页面
+  		if( !this.recommend.id ) {  //点击歌单时才可获取到歌单id值，刷新页面无法获得id，需要返回歌手列表页面
         this.$router.push({
           path: '/recommend'
         })
         return
       }
-  		getDesDetail(this.recommend.dissid).then((res) => {
+  		getDesDetail(this.recommend.id).then((res) => {
   			if( res.code === ERR_OK ){
   				this.recommendList = this._sortSongsList(res.cdlist[0].songlist) 
 

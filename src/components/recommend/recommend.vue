@@ -28,14 +28,15 @@
      	<div class="recommend-list">
         <i class="icon-huo"></i>
      		<h1 class="list-title">热门歌单</h1>       
-     		<ul>
-          <li v-for="item in songsList" class="item" @click="chooseItem(item)" ref="listGroup">
+     		<ul class="clearfix">
+          <li v-for="item, index in songsList" class="item" @click="chooseItem(item)" ref="listGroup">
             <div class="icon">
-              <img class="needsclick" width="60" v-lazy="item.imgurl">
+              <img class="needsclick" width="100%" v-lazy="item.picUrl">
+              <span class="listenNum">{{listenNum[index]}}</span>
             </div>
             <div class="text">
-              <h2 class="name" v-html="item.dissname"></h2>
-              <p class="desc" v-html="item.creator.name"></p>
+              <h2 class="name" v-html="item.songListDesc"></h2>
+              <p class="desc" v-html="item.songListAuthor"></p>
             </div>
           </li> 
         </ul>
@@ -46,7 +47,6 @@
       <loading></loading>
     </div>
    </scroll>
-   <div class="updateTip" ref="updateTip">{{updateTip}}</div>
    <router-view></router-view>
  </div>
 
@@ -70,28 +70,25 @@ export default {
     return{
       recommends: [],
       songsList: [],
-      pullDownRefresh: true,
-      pullDownRefreshThreshold: 90,
-      pullDownRefreshStop: 40,
+      // pullDownRefresh: true,
+      // pullDownRefreshThreshold: 90,
+      // pullDownRefreshStop: 40,
       listenScroll: true,
       probeType: 3,
       scrollY: -1,   
-      loadingTitle: '下拉刷新',
-      updateTip: "暂无数据，稍后再试吧",
-      sliderHeight: 0
+      sliderHeight: 0,
+      listenNum: []
     }
   },
 	created(){
 		this._getRecommend()
     this._getDesList()
-    console.log(this.$route)
 	},
 	methods: {
 		_getRecommend(){
 			getRecommend().then( (res) => {
 				if(res.code === ERR_OK){
 					this.recommends = res.data.slider
-          console.log(this.recommends)
 				}
 			} ).catch((err) => {
 				console.log(err)
@@ -100,17 +97,32 @@ export default {
     _getDesList(){
       getDesList().then( (res) => {
         if(res.code === ERR_OK){
-          this.songsList = res.data.list
+          this.songsList = res.data.songList
+          this.listenNum = this.changeListenNum(res.data.songList)
+          console.log(this.listenNum)
         }
       } ).catch( (err) => {
         console.log(err)
       } )
     },
     chooseItem(item) {
-      this.$router.push({
-        path: `/recommend/${item.dissid}`
-      })
-      this.setRecommend(item)
+      window.location.href = `https://y.qq.com/w/taoge.html?ADTAG=newyqq.taoge&id=${item.id}`
+
+      // this.$router.push({
+      //   // path: `/recommend/${item.id}`
+      //   path: `https://y.qq.com/w/taoge.html?ADTAG=myqq&from=myqq&channel=10007100&id=${item.id}`
+      // })
+      // this.setRecommend(item)
+    },
+    changeListenNum(nums) {
+      let str, ret = []
+      nums.forEach((item) => {
+        str = ( item.accessnum / 10000 ).toString()
+        str = str.substr(0, str.indexOf('.') + 2)
+        str = str + "万人听过"
+        ret.push(str)
+      }) 
+      return ret  
     },
     ...mapMutations({
       setRecommend: 'SET_RECOMMEND'
@@ -118,14 +130,14 @@ export default {
     _scroll(pos){
       this.scrollY = pos.y
     },
-    pullupSH(){
-      // if( !this.sliderHeight ) { return }  //修复首页滚动时fixedTitle bug
-       if( this.scrollY <= - this.sliderHeight && this.$route.fullPath === '/recommend') {
-          return true
-        }else{
-          return false
-        }
-    },
+    // pullupSH(){
+    //   // if( !this.sliderHeight ) { return }  //修复首页滚动时fixedTitle bug
+    //    if( this.scrollY <= - this.sliderHeight && this.$route.fullPath === '/recommend') {
+    //       return true
+    //     }else{
+    //       return false
+    //     }
+    // },
     _sliderHeight(h){
       this.sliderHeight = h
     },
@@ -138,11 +150,6 @@ export default {
 	},
   watch: {
       scrollY(val,oldVal){
-          // if( val <= - this.sliderHeight ){
-          //   this.$refs.fixedWrapper.style.display = `block`        
-          // }else{
-          //   this.$refs.fixedWrapper.style.display = `none`
-          // }
           if( val > 80 ) {
             this.loadingTitle = "释放刷新"
           }else {
@@ -217,32 +224,39 @@ export default {
           padding-left: 40px
           font-size: $font-size-large
           color: $color-text-l
-        .item
-          display: flex
-          box-sizing: border-box
-          align-items: center
-          padding: 0 20px 20px 20px
-          .icon
-            flex: 0 0 60px
-            width: 60px
-            padding-right: 20px
-            border-radius: 50%
-            // overflow: hidden
-          .text
-            display: flex
-            flex-direction: column
-            justify-content: center
-            flex: 1
-            line-height: 20px
-            overflow: hidden
-            font-size: $font-size-medium
-            .name
+        ul
+          padding: 0 10px
+          &.clearfix:after
+            display: table
+            content: ''
+            clear: both
+            height: 0
+          &.clearfix
+            *zoom: 1
+          .item
+            float: left
+            width: 48%
+            &:nth-child(odd)
+              margin-right: 10px
+            .icon
+              position: relative
+              .listenNum
+                position: absolute
+                bottom: 10px
+                left: 5px
+            .text
+              display: flex
+              flex-direction: column
+              justify-content: center
+              line-height: 20px
+              font-size: $font-size-medium
               margin-bottom: 10px
-              color: $color-text-l
-              no-wrap()
-            .desc
-              
-              color: $color-text-d
+              .name
+                margin-bottom: 0px
+                color: $color-text-l
+                no-wrap()
+              .desc                
+                color: $color-text-d
       .loading-container
         position: absolute
         width: 100%
