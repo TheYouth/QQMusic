@@ -15,10 +15,8 @@
   <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-v0.54.5-yellow.svg" alt="stylus"></a>
 </p>
 
-<p align="center">手机扫一扫预览：</p>
-<a align="center">
+### 手机扫一扫预览：
 ![ ](image/music.png)
-</a>
 
 ### 一、播放器基本功能
 - [x] 歌曲播放、切歌、进度控制
