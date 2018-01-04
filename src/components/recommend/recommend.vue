@@ -99,7 +99,6 @@ export default {
         if(res.code === ERR_OK){
           this.songsList = res.data.songList
           this.listenNum = this.changeListenNum(res.data.songList)
-          console.log(this.listenNum)
         }
       } ).catch( (err) => {
         console.log(err)

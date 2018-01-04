@@ -12,7 +12,7 @@ import {throttle} from '@/common/js/utils'
       props: {
         placeholder: {
           type: String,
-          default: 'Doge一下'
+          default: '搜索歌手、歌曲，搜索结果上拉可以加载更多'
         }
       },
       data(){

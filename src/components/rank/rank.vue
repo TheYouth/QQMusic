@@ -47,7 +47,6 @@ import {mapMutations} from 'vuex'
     methods: {
     	_getRank(){
     		getRank().then((res) => {
-    			console.log(res.data.topList)
     			this.rank = res.data.topList
     	    })
     	},

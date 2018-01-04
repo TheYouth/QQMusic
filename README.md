@@ -2,6 +2,8 @@
 
 > 基于Vue的音乐播放器
 
+> 说明：QQ音乐播放源过一段时间就会更改，因此示例中的歌曲可能无法播放，与代码质量无关
+
 <p align="center">
   <a href="https://github.com/vuejs/vue"><img src="https://img.shields.io/badge/vue-v2.5.2-green.svg" alt="Vue"></a>
   <a href="https://github.com/vuejs/vue-router"><img src="https://img.shields.io/badge/vue--router-v3.0.1-green.svg" alt="vue-router"></a>
@@ -12,6 +14,11 @@
   <a href="https://github.com/ftlabs/fastclick"><img src="https://img.shields.io/badge/fastclick-v1.0.6-yellow.svg" alt="fastclick"></a>
   <a href="https://github.com/stylus/stylus"><img src="https://img.shields.io/badge/stylus-v0.54.5-yellow.svg" alt="stylus"></a>
 </p>
+
+<p align="center">手机扫一扫预览：</p>
+<a align="center">
+  ![ ](image/music.png)
+</a>
 
 ### 一、播放器基本功能
 - [x] 歌曲播放、切歌、进度控制

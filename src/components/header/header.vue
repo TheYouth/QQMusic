@@ -3,8 +3,8 @@
     <router-link :to='path'>
       <i class="icon-geren" ></i>
     </router-link>
-    <div class="icon"></div>
-    <h1 class="text">Music  Player</h1>
+    <!-- <div class="icon"></div> -->
+    <h1 class="text">Music Player</h1>
     <i class="icon-mulu"></i>
   </div>
 </template>
@@ -65,7 +65,7 @@
       width: 32px
       height: 32px
       margin-right: 9px
-      bg-image('logo')
+      // bg-image('logo')
       background-size: 32px 32px
     .text
       font-weight: bold

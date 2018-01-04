@@ -97,6 +97,8 @@ export default {
             font-size: $font-size-medium
             color: $color-text-l
             font-weight: bold
+            height: 18px
+            line-height: 18px
           .item
             display: inline-block
             padding: 5px 10px
