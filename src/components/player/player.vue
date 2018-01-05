@@ -129,6 +129,9 @@ const STAY_LINE = 6
       }
     },
    computed: {
+    clienH() {
+      return document.body.clientHeight
+    },
     ...mapGetters([
         'fullScreen',
         'playList',
@@ -415,14 +418,22 @@ const STAY_LINE = 6
         val ? audio.play() : audio.pause()
       })
     },
-    inputPos(val, oldVal){
-      if( val === true ) {
-        this.$refs.miniPlayer.style.position = 'absolute'
-        this.$refs.miniPlayer.style.bottom = `-60px`
-      }else {
-        this.$refs.miniPlayer.style.position = 'fixed'
-      }
-    }
+
+    // inputPos(val, oldVal){
+    //   if( val === true ) {
+    //     this.$refs.miniPlayer.style.display = 'none'
+    //   }else {
+    //     this.$refs.miniPlayer.style.display = 'block'
+    //   }
+    // },
+    // clientH(val, oldVal){
+    //   console.log(val)
+    //   if( val > oldVal ) {
+    //     this.$refs.miniPlayer.style.display = 'block'
+    //   }else{
+    //     this.$refs.miniPlayer.style.display = 'none'
+    //   }
+    // }
    }
 	}
 </script>

@@ -1,7 +1,8 @@
 <template>
   <div class="search-wrapper">
     <i class="icon-search"></i>
-    <input ref="input" class="box" :placeholder="placeholder" v-model="searchTxt" @focus="_focus"/>
+    <input ref="input" class="box" :placeholder="placeholder" v-model="searchTxt" 
+    />
     <i class="icon-dismiss" v-show="searchTxt" @click="clearTXT()"></i>
   </div>
 </template>
@@ -29,15 +30,17 @@ import {mapMutations} from 'vuex'
           this.searchTxt = k
         },
         _blur(){  //让父组件调用这个方法
-          this.$refs.input.blur()
-          this.setInputPos(false)
-        },
-        _focus(){
-          this.setInputPos(true)
-        },
-        ...mapMutations({
-          setInputPos: 'SET_INPUT_POS'
-        })
+          this.$refs.input.blur()         
+        }
+        // focusInput(){
+        //   this.setInputPos(true)
+        // },
+        // blurInput(){
+        //   this.setInputPos(false)
+        // },
+        // ...mapMutations({
+        //   setInputPos: 'SET_INPUT_POS'
+        // })
       },
       created(){
         this.$watch( 'searchTxt', throttle((newTXT, oldTXT) => {
