@@ -33,6 +33,9 @@ const mutations = {
 	},
 	[types.SET_LOVE_LIST](state, love) {  //收藏列表
 	  state.loveList = love
+	},
+	[types.SET_INPUT_POS](state, pos) {  //收藏列表
+	  state.inputPos = pos
 	}
 }
 

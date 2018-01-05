@@ -7,10 +7,10 @@ const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
-      var express = require('express')
-      var axios = require('axios')
-      var app = express()
-      var apiRoutes = express.Router()
+var express = require('express')
+var axios = require('axios')
+var app = express()
+var apiRoutes = express.Router()
 app.use('/api', apiRoutes)
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -42,54 +42,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     },
     
     before(app){
-      // 获取推荐歌单
-      // app.get( '/api/getDesList', function(req, res) {
-      //   const url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
-      //   axios.get( url, {
-      //     headers: {
-      //       referer: 'https://y.qq.com/',
-      //       host: 'c.y.qq.com'
-      //     },
-      //     params: req.query
-      //   } ).then((response) => {
-      //     //res.json(response.data)
-      //      var ret = response.data
-      //     if (typeof ret === 'string') {
-      //       var reg = /^\w+\(({[^()]+})\)$/
-      //       var matches = ret.match(reg)
-      //       if (matches) {
-      //         ret = JSON.parse(matches[1])
-      //       }
-      //     }
-      //     res.json(ret)
-      //   } ).catch((err) => {
-      //     console.log(err)
-      //   })
-      // } )
-      // 获取推荐歌单歌曲
-      // app.get( '/api/getDesDetail', function(req, res) {
-      //   const url = 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg'
-      //   axios.get( url, {
-      //     headers: {
-      //       referer: 'https://y.qq.com/',
-      //       host: 'c.y.qq.com'
-      //     },
-      //     params: req.query
-      //   } ).then((response) => {
-      //     //res.json(response.data)
-      //      var ret = response.data
-      //     if (typeof ret === 'string') {
-      //       var reg = /^\w+\(({[^()]+})\)$/
-      //       var matches = ret.match(reg)
-      //       if (matches) {
-      //         ret = JSON.parse(matches[1])
-      //       }
-      //     }
-      //     res.json(ret)
-      //   } ).catch((err) => {
-      //     console.log(err)
-      //   })
-      // } )
       //获取歌词
       app.get( '/api/getLyric', function(req, res) {
         const url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
@@ -97,7 +49,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           headers: {
             referer: 'https://y.qq.com/',
             host: 'c.y.qq.com'
-            //referer: 'https://y.qq.com/portal/player.html'
           },
           params: req.query
         } ).then((response) => {

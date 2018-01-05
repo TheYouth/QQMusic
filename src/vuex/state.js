@@ -11,7 +11,8 @@ const state = {
   mode: playMode.sequence,
   currentIndex: -1,
   searchHistory: [],
-  loveList: []
+  loveList: [],
+  inputPos: false
 }
 
 export default state

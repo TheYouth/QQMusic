@@ -54,7 +54,7 @@ export default {
       clearInterval(this.timer)
     },
 	beforeDestroy(){
-		clearInterval(this.timer)
+	  clearInterval(this.timer)
 	},
 	methods: {
 		computedHeight(){

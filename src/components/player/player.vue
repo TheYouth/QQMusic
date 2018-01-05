@@ -72,7 +72,7 @@
       </div>
     </transition>
     <transition name="mini">
-      <div class="mini-player" v-show="!fullScreen" @click="show_fullScreen">
+      <div class="mini-player" ref="miniPlayer" v-show="!fullScreen" @click="show_fullScreen">
         <div class="icon">
            <little-progress :percent="progressPercent" :radius="radius">
           <img width="40" :src="currentSong.image" :class="rotateCD">
@@ -136,7 +136,8 @@ const STAY_LINE = 6
         'playing',
         'currentIndex',
         'mode',
-        'sequenceList'
+        'sequenceList',
+        'inputPos'
       ]),
     singerName(){
       return `-  ${this.currentSong.singer}  -`
@@ -413,6 +414,14 @@ const STAY_LINE = 6
       this.$nextTick(() => {
         val ? audio.play() : audio.pause()
       })
+    },
+    inputPos(val, oldVal){
+      if( val === true ) {
+        this.$refs.miniPlayer.style.position = 'absolute'
+        this.$refs.miniPlayer.style.bottom = `-60px`
+      }else {
+        this.$refs.miniPlayer.style.position = 'fixed'
+      }
     }
    }
 	}

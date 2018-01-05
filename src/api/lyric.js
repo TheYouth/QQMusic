@@ -3,7 +3,8 @@ import {commonParams, options} from './config'
 
 export default function getLyric(mid){
 
-	const url = '/api/getLyric'
+	// const url = '/api/getLyric'
+	const url = process.env.API_ROOT
 	// 把公共参数和其他参数合并
 	const data = Object.assign( {}, commonParams, {
 		pcachetime: + new Date() ,
@@ -12,7 +13,7 @@ export default function getLyric(mid){
 		loginUin: 0,
 		hostUin: 0,
 		format: 'json',
-		platform:' yqq',
+		platform:'yqq',
 		needNewCode: 0
 	})
 	return axios.get( url, {
