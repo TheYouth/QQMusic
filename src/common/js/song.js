@@ -43,7 +43,10 @@ export function createSong( musicData ){
 		album: musicData.albumname,
 		duration: musicData.interval, //时长
 		image: `https://y.gtimg.cn/music/photo_new/T002R300x300M000${musicData.albummid}.jpg?max_age=2592000`, //专辑图片
-		url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46`  //播放源
+		// url: `http://ws.stream.qqmusic.qq.com/${musicData.songid}.m4a?fromtag=46`  //播放源
+		url: `http://dl.stream.qqmusic.qq.com/C400${
+        musicData.songmid
+      }.m4a?guid=9035189320&vkey=F45CF08E99A296E05513E32A93FB60D08AB5BFC9141579AEE02158FA73B176DB7775B506740ED3940F48B51C15FB40FBB1C20F6DBADE946D&uin=&fromtag=999`
 	})
 }
 // musicData里面singer的数据结构是数组，我要的数据结构是字符串，并且多个歌手用'/'拼接

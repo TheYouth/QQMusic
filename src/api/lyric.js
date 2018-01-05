@@ -1,11 +1,10 @@
 import axios from 'axios'
+
 import {commonParams, options} from './config'
 
 export default function getLyric(mid){
 
-	// const url = '/api/getLyric'
-	const url = process.env.API_ROOT
-	// 把公共参数和其他参数合并
+	const url = '/api/getLyric'
 	const data = Object.assign( {}, commonParams, {
 		pcachetime: + new Date() ,
 		songmid: mid,
@@ -16,6 +15,7 @@ export default function getLyric(mid){
 		platform:'yqq',
 		needNewCode: 0
 	})
+
 	return axios.get( url, {
 		params: data
 	} ).then( (res) => {

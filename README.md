@@ -2,7 +2,7 @@
 
 > 基于Vue的音乐播放器
 
-> 说明：QQ音乐播放源过一段时间就会更改，因此示例中的歌曲可能无法播放，与代码质量无关
+> 说明：QQ音乐播放源时常更改，因此示例中的歌曲可能无法播放
 
 <p align="center">
   <a href="https://github.com/vuejs/vue"><img src="https://img.shields.io/badge/vue-v2.5.2-green.svg" alt="Vue"></a>
