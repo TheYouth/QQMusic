@@ -37,7 +37,7 @@ app.use('/api', apiRoutes)
 
 // app.use(express.static('./dist'))
 var oneYear = 60 * 1000 * 60 * 24 * 365
-app.use(express.static('./music/static/js',  { maxAge: oneYear }))
+app.use(express.static('./music',  { maxAge: oneYear }))
 
 module.exports = app.listen(port, function (err) {
   if (err) {
