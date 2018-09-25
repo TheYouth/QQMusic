@@ -1,15 +1,16 @@
 var express = require('express')
-var config = require('./config/index')
+var path = require('path')
+// var config = require('./config/index')
 var axios = require('axios')
 
-var port = process.env.PORT || config.build.port
+// var port = process.env.PORT || config.build.port
 
 var app = express()
 
 var apiRoutes = express.Router('./')
 
       //获取歌词
-      apiRoutes.get( '/getLyric', function(req, res) {
+      app.get( '/getLyric', function(req, res) {
         const url = 'https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric_new.fcg'
         axios.get( url, {
           headers: {
@@ -27,6 +28,7 @@ var apiRoutes = express.Router('./')
               ret = JSON.parse(matches[1])
             }
           }
+          res.setHeader('Access-Control-Allow-Origin', '*')
           res.json(ret)
         } ).catch((err) => {
           console.log(err)
@@ -37,12 +39,14 @@ app.use('/api', apiRoutes)
 
 // app.use(express.static('./dist'))
 var oneYear = 60 * 1000 * 60 * 24 * 365
-app.use(express.static('./music',  { maxAge: oneYear }))
+app.use(express.static(path.join(__dirname, 'dist'),  { maxAge: oneYear }))
 
-module.exports = app.listen(port, function (err) {
-  if (err) {
-    console.log(err)
-    return
-  }
-  console.log('Listening at http://localhost:' + port + '\n')
-})
+const port = process.env.PORT || 8090
+app.listen(port)
+// module.exports = app.listen(port, function (err) {
+//   if (err) {
+//     console.log(err)
+//     return
+//   }
+//   console.log('Listening at http://localhost:' + port + '\n')
+// })
